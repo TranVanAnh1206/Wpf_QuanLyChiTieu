@@ -1,0 +1,344 @@
+﻿<Window x:Class="Wpf_QuanLyChiTieu.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_QuanLyChiTieu"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:WindowsAnimations="clr-namespace:System.Windows.Media.Animation;assembly=PresentationFramework"
+        xmlns:uc="clr-namespace:Wpf_QuanLyChiTieu.UserControls"
+        xmlns:Effects="clr-namespace:System.Windows.Media.Effects;assembly=PresentationCore"
+        mc:Ignorable="d"
+        
+        Title="Đăng nhập" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource LoginVM}"
+        Name="loginWindow"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+
+        >
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding CloseCommand}" 
+                                   CommandParameter="{Binding ElementName=loginWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Border CornerRadius="0" Background="#eff2f7" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <uc:CtrlBar_UC Tag="{Binding Title, ElementName=loginWindow}"></uc:CtrlBar_UC>
+            </Grid>
+
+            <materialDesign:Card Grid.Row="1" UniformCornerRadius="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="#fff"></Setter>
+                            <Setter Property="FontSize" Value="18" />
+                            <Setter Property="Margin" Value="0 5 0 5" />
+                        </Style>
+
+                        <Style x:Key="ButtonStyles" TargetType="Button">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="FontSize" Value="17"/>
+                            <Setter Property="Foreground" Value="#fff"/>
+                            <Setter Property="Margin" Value="0, 10, 0, 10"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Width" Value="170"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="#fff"
+                                                Padding="10"
+                                                CornerRadius="25">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"/>
+                                        </Border>
+
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#e8e8e8"/>
+                                    <Setter Property="Foreground" Value="DimGray"/>
+                                </Trigger>
+
+                                <Trigger Property="IsMouseCaptured" Value="True">
+                                    <Setter Property="Background" Value="#d9d9d9"/>
+                                    <Setter Property="Foreground" Value="DimGray"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Resources>
+
+                    <Border BorderThickness="0" Grid.Column="0" CornerRadius="0 20 20 0" Background="#623ed0">
+                        <Grid Width="Auto" Height="Auto"  x:Name="RegisterComponent">
+                            <Canvas>
+                                <Polygon Points="40, 20 120, 90 10, 170" Fill="#FF9F7FFF"/>
+                                <Polygon Points="100, 400 200, 370 180, 470" Fill="#FF9F8FFF" Canvas.Left="-65" Canvas.Top="-30"/>
+                            </Canvas>
+
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Height="40" Width="150"
+                                       TextAlignment="Center"
+                                       FontWeight="Bold"
+                                        Background="Transparent"
+                                        FontSize="25"
+                                        Foreground="#fff"
+                                        Text="Đăng ký" />
+                                <TextBlock Text="Bạn chưa có tài khoản?"
+                                       TextAlignment="Center" 
+                                       Height="20" />
+
+                                <TextBlock Text="Vào đăng ký ngay."
+                                       TextAlignment="Center" 
+                                       Height="20" />
+
+                                <Button x:Name="ToRegister_Btn" 
+                                    Content="Đăng ký" 
+                                    Style="{StaticResource ButtonStyles}">
+                                    <!--<Button.Triggers>
+                                    <EventTrigger RoutedEvent="Button.Click">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                -->
+                                    <!-- Animation để mở rộng RegisterComponent -->
+                                    <!--
+                                                <DoubleAnimation Storyboard.TargetName="RegisterComponent"
+                                                                 Storyboard.TargetProperty="Width"
+                                                                 From="200" To="600" Duration="0:0:0.3"/>
+                                                -->
+                                    <!-- Animation để thu hẹp LoginComponent -->
+                                    <!--
+                                                <DoubleAnimation Storyboard.TargetName="LoginComponent"
+                                                                 Storyboard.TargetProperty="Width"
+                                                                 From="600" To="200" Duration="0:0:0.3"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Button.Triggers>-->
+                                </Button>
+
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <materialDesign:Card Padding="10" Grid.Column="1" x:Name="LoginComponent">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <TextBlock Text="Đăng nhập"
+                                           Foreground="Black"
+                                           FontWeight="Bold"
+                                           FontSize="30"
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"></TextBlock>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <StackPanel Orientation="Horizontal">
+
+                                    <materialDesign:PackIcon VerticalAlignment="Center" 
+                                                             HorizontalAlignment="Left"
+                                                             Width="41" Height="45" Kind="Account" 
+                                                             Margin="0,18,0,0" />
+
+                                    <TextBox x:Name="txt_Login_Username" Width="400"
+                                         VerticalAlignment="Center"
+                                         Text="{Binding Username}"
+                                         FontSize="18" Margin="10 0 0 0"                           
+                                         materialDesign:HintAssist.Hint="Tên tài khoản"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="2">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon VerticalAlignment="Center" 
+                                                             HorizontalAlignment="Left"
+                                                             Width="41" Height="45" Kind="Lock" 
+                                                             Margin="0,18,0,3" />
+
+                                    <PasswordBox materialDesign:HintAssist.Hint="Mật khẩu"
+                                             FontSize="18" Width="400" Height="46"
+                                             x:Name="pwb_Login_pw" Margin="10 0 0 0" 
+                                             materialDesign:TextFieldAssist.HasClearButton="True"
+                                             IsEnabled="{Binding ElementName=RevealPasswordFloatingEnabled, Path=IsChecked}"
+                                             Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="PasswordChanged">
+                                                <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" 
+                                                                   CommandParameter="{Binding ElementName=pwb_Login_pw}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </PasswordBox>
+
+                                </StackPanel>
+
+                            </Grid>
+
+                            <Grid Grid.Row="4" Margin="20 0 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.Resources>
+                                    <Style x:Key="loginButtonStyles" TargetType="Button">
+                                        <Setter Property="Background" Value="#FFAEEA00"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="Height" Value="44"/>
+                                        <Setter Property="FontSize" Value="18"/>
+                                        
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="Transparent" 
+                                                            CornerRadius="20">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <Effects:DropShadowEffect Color="#333" Opacity="0.5" 
+                                                                          Direction="310" ShadowDepth="7" BlurRadius="10"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                        
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="White"/>
+                                                <Setter Property="Effect">
+                                                    <Setter.Value>
+                                                        <Effects:DropShadowEffect Color="#333" Opacity="0.3" 
+                                                                          Direction="320" ShadowDepth="2" BlurRadius="8"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border Background="{TemplateBinding Background}" BorderThickness="2" 
+                                                                    BorderBrush="#FFAEEA00" 
+                                                                    CornerRadius="20">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+
+                                    <Style x:Key="CancelButtonStyles" TargetType="Button">
+                                        <Setter Property="Background" Value="#FFFF242A"/>
+                                        <Setter Property="Foreground" Value="#333"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="Height" Value="44"/>
+                                        <Setter Property="FontSize" Value="18"/>
+
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="Transparent" 
+                                                            CornerRadius="20">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <Effects:DropShadowEffect Color="#333" Opacity="0.5" 
+                                                                          Direction="310" ShadowDepth="7" BlurRadius="10"/>
+                                            </Setter.Value>
+                                        </Setter>
+
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="White"/>
+                                                <Setter Property="Effect">
+                                                    <Setter.Value>
+                                                        <Effects:DropShadowEffect Color="#333" Opacity="0.3" 
+                                                                          Direction="320" ShadowDepth="2" BlurRadius="8"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border Background="{TemplateBinding Background}" BorderThickness="2" 
+                                                                    BorderBrush="#FFFF242A" 
+                                                                    CornerRadius="20">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Resources>
+
+                                <Grid Grid.Column="0">
+                                    <Button Width="150" x:Name="btn_Login_Login"
+                                            Command="{Binding LoginCommand}"
+                                            CommandParameter="{Binding ElementName=loginWindow}"
+                                            Content="Đăng nhập"
+                                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                            Style="{StaticResource loginButtonStyles}"
+                                            ToolTip="Nhấn để đăng nhập."/>
+                                </Grid>
+
+                                <Grid Grid.Column="2">
+                                    <Button Width="150" x:Name="btn_Login_Cancel"
+                                            IsCancel="True" Content="Hủy"
+                                            Command="{Binding CloseCommand}"
+                                            CommandParameter="{Binding ElementName=loginWindow}"
+                                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                            Style="{StaticResource CancelButtonStyles}"
+                                            ToolTip="Không muốn đăng nhập? Nhấn để hủy." />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+    </Border>
+</Window>

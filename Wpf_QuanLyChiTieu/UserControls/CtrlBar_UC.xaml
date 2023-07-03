@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="Wpf_QuanLyChiTieu.UserControls.CtrlBar_UC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Wpf_QuanLyChiTieu.UserControls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Name="userControlBar"
+             
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="13"
+            TextOptions.TextFormattingMode="Ideal"
+            TextOptions.TextRenderingMode="Auto"
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"
+             >
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i:InvokeCommandAction Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=userControlBar}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="Button" x:Key="UserCtrl_Btn">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Width" Value="26"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Cursor" Value="Hand"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="White"
+                                    BorderThickness="2"
+                                    CornerRadius="50">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+
+        <DockPanel>
+            <materialDesign:ColorZone CornerRadius="0 0 0 0" Padding="8" Mode="Inverted" >
+                <DockPanel>
+                    <Button ToolTip="Close Button"
+                            DockPanel.Dock="Right"
+                            Command="{Binding CloseCommand}"
+                            CommandParameter="{Binding ElementName=userControlBar}"
+                            Style="{StaticResource UserCtrl_Btn}">
+                        <materialDesign:PackIcon Kind="Close" />
+                    </Button>
+
+                    <Button ToolTip="Maximize Button"
+                            DockPanel.Dock="Right"
+                            Command="{Binding MaximizedCommand}"
+                            CommandParameter="{Binding ElementName=userControlBar}"
+                            Style="{StaticResource UserCtrl_Btn}"
+                            Margin="10 0 10 0">
+                        <materialDesign:PackIcon Kind="WindowMaximize" />
+                    </Button>
+
+                    <Button ToolTip="Minimize Button"
+                            Style="{StaticResource UserCtrl_Btn}"
+                            Command="{Binding MinimizedCommand}"
+                            CommandParameter="{Binding ElementName=userControlBar}"
+                            DockPanel.Dock="Right">
+                        <materialDesign:PackIcon Kind="Minus" />
+                    </Button>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="16,0,0,0" 
+                                   VerticalAlignment="Center"
+                                   >
+                            <Run Text="Phần mềm quản lý chi tiêu - "/>
+                            <Run Text="{Binding Tag, ElementName=userControlBar}" />
+                        </TextBlock>
+                    </StackPanel>
+                </DockPanel>
+            </materialDesign:ColorZone>
+        </DockPanel>
+    </Grid>
+</UserControl>

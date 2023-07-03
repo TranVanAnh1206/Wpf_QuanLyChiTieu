@@ -1,0 +1,234 @@
+﻿<Window x:Class="Wpf_QuanLyChiTieu.PersonalExpensesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_QuanLyChiTieu"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="Quản lý chi tiêu Cá nhân" Height="768" Width="1080"
+        
+        WindowStartupLocation="CenterScreen"
+        x:Name="personalExpensesWindow"
+        DataContext="{StaticResource PerExpenseVM}"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+         TextElement.FontWeight="Regular"
+         TextElement.FontSize="13"
+         TextOptions.TextFormattingMode="Ideal"
+         TextOptions.TextRenderingMode="Auto"
+         Background="{DynamicResource MaterialDesignPaper}"
+         FontFamily="{DynamicResource MaterialDesignFont}"
+        >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadWindowCommand}" 
+                                   CommandParameter="{Binding ElementName=personalExpensesWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <materialDesign:Card Margin="10" Padding="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <TextBox FontSize="18" x:Name="perExp_Name"
+                                     Text="{Binding Exp_Name}"
+                                     VerticalAlignment="Center" materialDesign:HintAssist.Hint="Vật phẩm chi tiêu"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="perExp_Name_TextChanged" />
+                        </Grid>
+
+                        <Grid Grid.Row="1" Margin="0, 10, 0, 0">
+                            <TextBox FontSize="18" Text="{Binding Exp_Price}"
+                                     x:Name="perExp_Price" VerticalAlignment="Center"
+                                      materialDesign:HintAssist.Hint="Giá thành"
+                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        </Grid>
+
+                        <Grid Grid.Row="2" Margin="0, 10, 0, 0">
+                            <DatePicker  FontSize="18" SelectedDate="{Binding Exp_Date}"
+                                         materialDesign:HintAssist.Hint="Ngày tháng" 
+                                         Grid.ColumnSpan="2" Margin="0,7,-0.4,6.6">
+                                <DatePicker.Resources>
+                                    <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton"
+                                          BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+
+                                        <Setter Property="materialDesign:CalendarAssist.SelectionColor"
+                                            Value="#B2F39B" />
+
+                                        <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor"
+                                            Value="White" />
+                                    </Style>
+
+                                    <Style x:Key="CustomCalendarButton" TargetType="CalendarButton"
+                                          BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                        <Setter Property="materialDesign:CalendarAssist.SelectionColor"
+                                            Value="#B2F39B" />
+
+                                        <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor"
+                                            Value="Black" />
+                                    </Style>
+
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Setter Property="Foreground" Value="White" />
+                                    </Style>
+
+                                    <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}"
+                                          BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                        <Setter Property="Background" Value="White" />
+
+                                        <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
+
+                                        <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
+
+                                        <Setter Property="Foreground" Value="White" />
+
+                                        <Setter Property="materialDesign:CalendarAssist.HeaderBackground"
+                                            Value="#A2E9FF" />
+
+                                        <Setter Property="materialDesign:CalendarAssist.HeaderForeground"
+                                            Value="Black" />
+                                    </Style>
+
+                                    <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                        <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
+                                    </Style>
+                                </DatePicker.Resources>
+                            </DatePicker>
+                        </Grid>
+
+                        <Grid Grid.Row="3" Margin="0, 10, 0, 0">
+                            <StackPanel Orientation="Vertical">
+                                <ComboBox FontSize="18" Cursor="Hand"
+                                          ItemsSource="{Binding ExpCateg_List}"
+                                          DisplayMemberPath="Ec_Name"
+                                          SelectedItem="{Binding SelectedExpCateg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          x:Name="OutlinedComboBox"
+                                          materialDesign:HintAssist.Hint="Danh mục chi tiêu"
+                                          IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}" >
+
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="4" Margin="0, 10, 0, 0">
+                            <StackPanel Margin="0 5 0 0">
+                                <TextBox FontSize="18" VerticalAlignment="Top" Height="100"
+                                         x:Name="perExp_Note"
+                                         Text="{Binding ExpI_Note}"
+                                        materialDesign:HintAssist.Hint="Ghi chú"
+                                        AcceptsReturn="True"
+                                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto" TextChanged="perExp_Note_TextChanged" />
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Column="1" Width="300" Height="349" Margin="20 0 20 0">
+                        <StackPanel Orientation="Vertical">
+                            <Button Content="Chọn file hình ảnh"
+                                    Command="{Binding ImportImageCommand}"
+                                    FontSize="17" Padding="10" Height="50"/>
+
+                            <Image Width="Auto" Height="349" Source="{Binding Img_Path}" Margin="0 10 0 10"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Button Content="THÊM" Width="150" Margin="10"
+                                    Command="{Binding AddPerExpenseCommand}"
+                                    Background="LightGreen" Foreground="#111"
+                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                    Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                    ToolTip="MaterialDesignFlatDarkButton" />
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <Button Content="CẬP NHẬT" Margin="10"
+                                    Background="Blue"
+                                    Command="{Binding UpdatePerExpenseCommand}"
+                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                    Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                    ToolTip="MaterialDesignFlatDarkButton" />
+                        </Grid>
+
+                        <Grid Grid.Row="2">
+                            <Button Content="XÓA" Margin="10" Background="Red"
+                                    Command="{Binding DeletePerExpenseCommand}"
+                                    Foreground="#fff"
+                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                    Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                    ToolTip="MaterialDesignFlatDarkButton" />
+                        </Grid>
+
+                        <Grid Grid.Row="3">
+                            <Button Content="HỦY"
+                                    Command="{Binding CancelPerExpenseCommand}" Margin="10"
+                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                    Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                    ToolTip="MaterialDesignFlatDarkButton" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <ListView Margin="0,0,-0.4,-0.2" VerticalAlignment="Stretch"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              ItemsSource="{Binding Exp_List}"
+                              SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ListView.View>
+                            <GridView>
+
+                                <!--Các cột khác-->
+                                <GridViewColumn Header="Ngày tháng" DisplayMemberBinding="{Binding Exp_Date, StringFormat={}{0:dd/MM/yyyy}}"></GridViewColumn>
+                                <GridViewColumn Header="Vật phẩm" DisplayMemberBinding="{Binding Exp_Name}"></GridViewColumn>
+                                <GridViewColumn Header="Giá thành" DisplayMemberBinding="{Binding Exp_Price, StringFormat='{}{0:N0} VND'}"></GridViewColumn>
+                                <GridViewColumn Header="Danh mục" DisplayMemberBinding="{Binding Ec_Name}"></GridViewColumn>
+                                <GridViewColumn Header="Ghi chú" DisplayMemberBinding="{Binding ExpI_Note}"></GridViewColumn>
+                                <GridViewColumn Header="Hình ảnh">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Width="40" Height="40" Source="{Binding Img_Path}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</Window>

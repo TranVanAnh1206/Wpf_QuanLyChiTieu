@@ -1,0 +1,491 @@
+﻿<Window x:Class="Wpf_QuanLyChiTieu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_QuanLyChiTieu"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:uc="clr-namespace:Wpf_QuanLyChiTieu.UserControls"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="Trang chủ" Height="800" Width="1248"
+        
+        WindowStartupLocation="CenterScreen"
+        x:Name="mainWindow"
+        DataContext="{StaticResource MainVM}"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+         TextElement.FontWeight="Regular"
+         TextElement.FontSize="13"
+         TextOptions.TextFormattingMode="Ideal"
+         TextOptions.TextRenderingMode="Auto"
+         Background="{DynamicResource MaterialDesignPaper}"
+         FontFamily="{DynamicResource MaterialDesignFont}"
+        >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadMainWindowCommand}" 
+                                   CommandParameter="{Binding ElementName=mainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <uc:CtrlBar_UC Tag="{Binding Title, ElementName=mainWindow}"></uc:CtrlBar_UC>
+        </Grid>
+
+        <materialDesign:Card Grid.Row="1">
+            <TabControl SnapsToDevicePixels="True"
+                        Background="#F2F2F2"
+                        Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+                        TabStripPlacement="Left">
+
+                <TabItem Width="Auto" Margin="0 52 0 0"
+                         Padding="10"
+                         Cursor="Hand">
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon Width="24" Height="24"
+                                                    HorizontalAlignment="Center"
+                                                    Kind="Home" />
+                            <TextBlock Margin="0 7 0 0" HorizontalAlignment="Center" Text="Trang chủ" />
+                        </StackPanel>
+                    </TabItem.Header>
+
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid Margin="0 0 0 10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" Margin="5 0 0 0">
+                                    <Grid>
+                                        <Button materialDesign:ButtonAssist.CornerRadius="10"
+                                            Command="{Binding FamilyExpenseWindowCommand}"
+                                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                            Style="{StaticResource MaterialDesignRaisedButton}"
+                                            ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                            <TextBlock Text="Chi tiêu gia đình" />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid Grid.Column="1" Margin="5 0 5 0">
+                                    <Grid>
+                                        <Button materialDesign:ButtonAssist.CornerRadius="10"
+                                                Command="{Binding PersonalExpenseWindowCommand}"
+                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                                ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                            <TextBlock Text="Chi tiêu Cá nhân" />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid Grid.Column="2">
+                                    <Grid>
+                                        <Button materialDesign:ButtonAssist.CornerRadius="10"
+                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                                ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                            <TextBlock Text="Thu nhập" />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Margin="0 0 0 10">
+                            <materialDesign:Card  Padding="0" Background="#FFBC4FFF" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0"
+                                          Margin="16,16,16,4"
+                                          Style="{StaticResource MaterialDesignHeadline5TextBlock}">
+                                    <Run Text="XIN CHÀO"/>
+                                    <Run Text="đến với phần mềm quản lý chi tiêu"/>
+                                    </TextBlock>
+
+                                    <TextBlock Grid.Row="2" Margin="16,5,16,8"
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           FontSize="18"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Welcom to spending management application" />
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <materialDesign:Card Width="Auto" Padding="0"
+                                      Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Margin="16,16,16,4"
+                                              Style="{StaticResource MaterialDesignHeadline5TextBlock}">
+                                            <Run Text="Tổng chi tiêu gia đình tháng"/>
+                                            <Run Text="{Binding CurrentMonth}"/>
+                                        </TextBlock>
+
+                                        <Separator Grid.Row="1"  Style="{StaticResource MaterialDesignLightSeparator}" />
+
+                                        <TextBlock Grid.Row="2"
+                                              Margin="16,0,16,8"
+                                              FontSize="25"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Center"
+                                              Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                              Text="{Binding TotalExpense, StringFormat='{}{0:N0} VND'}" />
+
+                                    </Grid>
+                                </materialDesign:Card>
+                            </Grid>
+
+                            <Grid Grid.Column="1" Margin="10 0 10 0">
+                                <materialDesign:Card Width="Auto" Padding="0"
+                                                Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Margin="16,16,16,4"
+                                              Style="{StaticResource MaterialDesignHeadline5TextBlock}" >
+                                            <Run Text="Tổng chi tiêu cá nhân tháng"/>
+                                            <Run Text="{Binding CurrentMonth}"/>
+                                        </TextBlock>
+
+                                        <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+
+                                        <TextBlock Grid.Row="2" Margin="16,0,16,8" FontSize="25"
+                                              HorizontalAlignment="Left" VerticalAlignment="Center"
+                                              Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                              Text="{Binding TotalPersonalExpense, StringFormat='{}{0:N0} VND'}" />
+
+                                    </Grid>
+                                </materialDesign:Card>
+                            </Grid>
+
+                            <Grid Grid.Column="2">
+                                <materialDesign:Card Width="Auto" Padding="0"
+                                      Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Margin="16,16,16,4"
+                                                  Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                                  Text="Biến động số dư" />
+
+                                        <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+
+                                        <TextBlock Grid.Row="2" Margin="16,0,16,8"
+                                              FontSize="25" Text="100.000" 
+                                              HorizontalAlignment="Left" VerticalAlignment="Center"
+                                              Style="{StaticResource MaterialDesignBody2TextBlock}" />
+
+                                    </Grid>
+                                </materialDesign:Card>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="3" Margin="0 10 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <!--Style cho fill button-->
+                            <Grid.Resources>
+                                <Style x:Key="FillButton" TargetType="Button">
+                                    <Setter Property="Background" Value="Aqua"/>
+                                    <Setter Property="FontSize" Value="18"/>
+                                    <Setter Property="Width" Value="180"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" BorderThickness="1" CornerRadius="20" BorderBrush="Transparent">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="White"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border Background="{TemplateBinding Background}" BorderThickness="2" CornerRadius="20" BorderBrush="Aqua">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Resources>
+                            <!-- ================= -->
+
+                            <Grid Grid.Column="0">
+                                <DatePicker Width="200" SelectedDate="{Binding FromDate}" 
+                                            materialDesign:HintAssist.Hint="Từ ngày">
+                                    <DatePicker.Resources>
+                                        <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#B2F39B" />
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="Black" />
+                                        </Style>
+
+                                        <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#B2F39B" />
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="Black" />
+                                        </Style>
+                                        <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                            <Setter Property="Background" Value="White" />
+                                            <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
+                                            <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
+                                            <Setter Property="Foreground" Value="White" />
+                                            <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="#A2E9FF" />
+                                            <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="Black" />
+                                        </Style>
+                                        <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                            <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
+                                        </Style>
+                                    </DatePicker.Resources>
+                                </DatePicker>
+                            </Grid>
+
+                            <Grid Grid.Column="1">
+                                <DatePicker Width="200" SelectedDate="{Binding ToDate}" materialDesign:HintAssist.Hint="Đến ngày">
+                                    <DatePicker.Resources>
+                                        <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#B2F39B" />
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="Black" />
+                                        </Style>
+
+                                        <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#B2F39B" />
+                                            <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
+                                        </Style>
+
+                                        <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                            <Setter Property="Background" Value="White" />
+                                            <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
+                                            <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
+                                            <Setter Property="Foreground" Value="White" />
+                                            <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="#A2E9FF" />
+                                            <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="Black" />
+                                        </Style>
+                                        <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                            <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
+                                        </Style>
+                                    </DatePicker.Resources>
+                                </DatePicker>
+                            </Grid>
+
+                            <Grid Grid.Column="2">
+                                <ComboBox x:Name="MW_CBox_Fill"
+                                          materialDesign:HintAssist.Hint="Chọn loại chi tiêu"
+                                          ItemsSource="{Binding ExpType_List}"
+                                          SelectedItem="{Binding SelectedExpType}"
+                                          DisplayMemberPath="ExpType_Name"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                            </Grid>
+
+                            <Grid Grid.Column="3">
+                                <Button Command="{Binding FillCommand}" 
+                                        CommandParameter="{Binding ElementName=Fill_Btn}"
+                                        x:Name="Fill_Btn"
+                                        Content="Lọc kết quả" 
+                                        Style="{StaticResource FillButton}"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="4">
+                            <ListView ItemsSource="{Binding Exp_List}"
+                                      Margin="0,0,-0.4,-0.2" 
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Ngày tháng" DisplayMemberBinding="{Binding Exp_Date, StringFormat={}{0:dd/MM/yyyy}}"></GridViewColumn>
+                                        <GridViewColumn Header="Tên" DisplayMemberBinding="{Binding Exp_Name}"></GridViewColumn>
+                                        <GridViewColumn Header="Giá thành" DisplayMemberBinding="{Binding Exp_Price, StringFormat='{}{0:N0} VND'}"></GridViewColumn>
+                                        <GridViewColumn Header="Loại chi tiêu" DisplayMemberBinding="{Binding ExpTypeName}"></GridViewColumn>
+                                        <GridViewColumn Header="Ghi chú" DisplayMemberBinding="{Binding Exp_Note}"></GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Width="Auto">
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon Width="24" Height="24"
+                                                    HorizontalAlignment="Center"
+                                                    Kind="ChartBar" />
+                            <TextBlock Margin="0 7 0 0" HorizontalAlignment="Center" Text="Thống kê" />
+                        </StackPanel>
+                    </TabItem.Header>
+
+                    <Grid Margin="16" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <DockPanel>
+                                    <TextBlock DockPanel.Dock="Left" FontSize="28" Padding="10" Text="Thống kê chi tiêu"/>
+                                    <StackPanel Margin="20 0 0 0" DockPanel.Dock="Left" Orientation="Horizontal">
+                                        <ComboBox x:Name="OutlinedComboBox"
+                                                    Width="256"
+                                                    materialDesign:HintAssist.Hint="Some item"
+                                                    IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}"
+                                                    ItemsSource="{Binding ShortStringList}"
+                                                    Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                                        
+                                        
+                                    </StackPanel>
+                                    <Button Width="200" DockPanel.Dock="Right" Content="Xuất file excel"/>
+                                </DockPanel>
+
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <lvc:CartesianChart Series="{Binding SeriesCollection}"
+                                                    FontSize="18" Height="670"
+                                                    LegendLocation="Top">
+                                    <lvc:CartesianChart.AxisX>
+                                        <lvc:Axis Title="Tháng" FontSize="17" Labels="{Binding Lable}"/>
+                                    </lvc:CartesianChart.AxisX>
+
+                                    <lvc:CartesianChart.AxisY>
+                                        <lvc:Axis Title="Số tiền (VND)" FontSize="17"/>
+                                    </lvc:CartesianChart.AxisY>
+                                </lvc:CartesianChart>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Width="Auto">
+                    <TabItem.Header>
+                        <StackPanel>
+                            <materialDesign:PackIcon Kind="Calendar" Width="24" Height="24" HorizontalAlignment="Center"/>
+                            <TextBlock Margin="0 7 0 0" HorizontalAlignment="Center" Text="Kế hoạch"/>
+                        </StackPanel>
+                    </TabItem.Header>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" FontSize="19" 
+                                   Padding="10" Text="Lập kế hoạch chi tiêu"/>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Width="Auto">
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon Width="24" Height="24" HorizontalAlignment="Center"
+                                                    Kind="Cog" />
+                            <TextBlock Margin="0 7 0 0" HorizontalAlignment="Center" Text="Cài đặt" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel Margin="16">
+                        <TextBlock Margin="0,0,0,8"
+                                  Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                  Text="Photos" />
+                        <TextBlock>
+                                  <Run Text="tab 3 content. Default look and behaviors." />
+                                  <LineBreak />
+                                  <LineBreak />
+                                  <Run FontStyle="Italic">
+                                        Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+                                </Run>
+                        </TextBlock>
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem Width="Auto">
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon Width="24" Height="24" 
+                                                    HorizontalAlignment="Center" Kind="Account" />
+                            <TextBlock Margin="0 7 0 0" HorizontalAlignment="Center" Text="Tài khoản" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel Margin="16">
+                        <TextBlock Margin="0,0,0,8" Text="Sounds" 
+                                  Style="{StaticResource MaterialDesignHeadline5TextBlock}" />
+                        <TextBlock>
+                                  <Run Text="tab 4 content. Default look and behaviors." />
+                                  <LineBreak />
+                                  <LineBreak />
+                                  <Run FontStyle="Italic">
+                                    Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+                                  </Run>
+                        </TextBlock>
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem Width="Auto">
+                    <TabItem.Header>
+                        <StackPanel>
+                            <materialDesign:PackIcon Width="24" Height="24" 
+                                                    HorizontalAlignment="Center" Kind="Power" />
+                            <TextBlock Margin="0 7 0 0" HorizontalAlignment="Center" Text="Đăng xuất" />
+                        </StackPanel>
+                    </TabItem.Header>
+                </TabItem>
+            </TabControl>
+        </materialDesign:Card>
+    </Grid>
+</Window>

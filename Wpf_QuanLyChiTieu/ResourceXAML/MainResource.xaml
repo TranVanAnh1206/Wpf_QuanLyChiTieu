@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ViewModel="clr-namespace:Wpf_QuanLyChiTieu.ViewModel">
+    <ViewModel:MainViewModel x:Key="MainVM"></ViewModel:MainViewModel>
+    <ViewModel:LoginViewModel x:Key="LoginVM"></ViewModel:LoginViewModel>
+    <ViewModel:FamilyExpenseViewModel x:Key="FamExpenseVM"></ViewModel:FamilyExpenseViewModel>
+    <ViewModel:PersonalExpensesViewModel x:Key="PerExpenseVM"></ViewModel:PersonalExpensesViewModel>
+
+</ResourceDictionary>
