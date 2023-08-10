@@ -7,17 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wpf_QuanLyChiTieu.Model
+namespace QuanLyChiTieuModel.EF
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Video
+    public partial class Images
     {
-        public int Vid_ID { get; set; }
-        public string Vid_Name { get; set; }
-        public string Vid_Url { get; set; }
-        public Nullable<int> Vid_Relation_ID { get; set; }
-        public string Vid_Type { get; set; }
+        public int Img_ID { get; set; }
+        public string Img_Name { get; set; }
+        public string Img_Url { get; set; }
+        public Nullable<int> Img_Relation_ID { get; set; }
+        public string Img_Type { get; set; }
     }
 }

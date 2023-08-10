@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QuanLiChiTieu_V2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QuanLiChiTieu_V2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="AccID" />
@@ -248,86 +248,29 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLiChiTieu_V2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="QuanLiChiTieu_V2Entities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="USP_LOGIN" ReturnType="Collection(QuanLiChiTieu_V2Model.USP_LOGIN_Result)">
-            <Parameter Name="accName" Mode="In" Type="String" />
-            <Parameter Name="accPassword" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USP_UpdateAccount">
-            <Parameter Name="AccID" Mode="In" Type="String" />
-            <Parameter Name="AccDisplayName" Mode="In" Type="String" />
-            <Parameter Name="AccNewPassword" Mode="In" Type="String" />
-            <Parameter Name="AccPasswordConfirm" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="Accounts" EntityType="QuanLiChiTieu_V2Model.Account" />
-          <EntitySet Name="ExpenseCategories" EntityType="QuanLiChiTieu_V2Model.ExpenseCategory" />
-          <EntitySet Name="Fml_ExpenseInfo" EntityType="QuanLiChiTieu_V2Model.Fml_ExpenseInfo" />
-          <EntitySet Name="Fml_Expenses" EntityType="QuanLiChiTieu_V2Model.Fml_Expenses" />
-          <EntitySet Name="Images" EntityType="QuanLiChiTieu_V2Model.Image" />
-          <EntitySet Name="Psn_ExpenseInfo" EntityType="QuanLiChiTieu_V2Model.Psn_ExpenseInfo" />
-          <EntitySet Name="Psn_Expenses" EntityType="QuanLiChiTieu_V2Model.Psn_Expenses" />
-          <EntitySet Name="RevenueCategories" EntityType="QuanLiChiTieu_V2Model.RevenueCategory" />
-          <EntitySet Name="RevenueInfoes" EntityType="QuanLiChiTieu_V2Model.RevenueInfo" />
-          <EntitySet Name="Revenues" EntityType="QuanLiChiTieu_V2Model.Revenue" />
-          <EntitySet Name="Users" EntityType="QuanLiChiTieu_V2Model.User" />
-          <EntitySet Name="Videos" EntityType="QuanLiChiTieu_V2Model.Video" />
-          <AssociationSet Name="FK__Users__AccID__4BAC3F29" Association="QuanLiChiTieu_V2Model.FK__Users__AccID__4BAC3F29">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Fml_Expen__Ec_ID__6FE99F9F" Association="QuanLiChiTieu_V2Model.FK__Fml_Expen__Ec_ID__6FE99F9F">
-            <End Role="ExpenseCategory" EntitySet="ExpenseCategories" />
-            <End Role="Fml_ExpenseInfo" EntitySet="Fml_ExpenseInfo" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Psn_Expen__Ec_ID__76969D2E" Association="QuanLiChiTieu_V2Model.FK__Psn_Expen__Ec_ID__76969D2E">
-            <End Role="ExpenseCategory" EntitySet="ExpenseCategories" />
-            <End Role="Psn_ExpenseInfo" EntitySet="Psn_ExpenseInfo" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Fml_Expen__F_exp__70DDC3D8" Association="QuanLiChiTieu_V2Model.FK__Fml_Expen__F_exp__70DDC3D8">
-            <End Role="Fml_Expenses" EntitySet="Fml_Expenses" />
-            <End Role="Fml_ExpenseInfo" EntitySet="Fml_ExpenseInfo" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Psn_Expen__P_exp__778AC167" Association="QuanLiChiTieu_V2Model.FK__Psn_Expen__P_exp__778AC167">
-            <End Role="Psn_Expenses" EntitySet="Psn_Expenses" />
-            <End Role="Psn_ExpenseInfo" EntitySet="Psn_ExpenseInfo" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RevenueIn__RevCa__656C112C" Association="QuanLiChiTieu_V2Model.FK__RevenueIn__RevCa__656C112C">
-            <End Role="RevenueCategory" EntitySet="RevenueCategories" />
-            <End Role="RevenueInfo" EntitySet="RevenueInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RevenueIn__Rev_I__6477ECF3" Association="QuanLiChiTieu_V2Model.FK__RevenueIn__Rev_I__6477ECF3">
-            <End Role="Revenue" EntitySet="Revenues" />
-            <End Role="RevenueInfo" EntitySet="RevenueInfoes" />
-          </AssociationSet>
-        </EntityContainer>
-        <ComplexType Name="USP_LOGIN_Result">
-          <Property Type="Int32" Name="AccID" Nullable="false" />
-          <Property Type="String" Name="AccName" Nullable="false" MaxLength="250" />
-          <Property Type="String" Name="AccPassword" Nullable="false" MaxLength="250" />
-          <Property Type="String" Name="AccDisplayname" Nullable="true" MaxLength="250" />
-        </ComplexType>
-        <EntityType Name="Account">
+        <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="AccID" />
           </Key>
           <Property Name="AccID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AccName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="AccPassword" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="AccName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AccPassword" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AccDisplayname" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Users" Relationship="QuanLiChiTieu_V2Model.FK__Users__AccID__4BAC3F29" FromRole="Account" ToRole="User" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__AccID__4BAC3F29" FromRole="Accounts" ToRole="Users" />
         </EntityType>
-        <EntityType Name="ExpenseCategory">
+        <EntityType Name="ExpenseCategories">
           <Key>
             <PropertyRef Name="Ec_ID" />
           </Key>
           <Property Name="Ec_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ec_Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Fml_ExpenseInfo" Relationship="QuanLiChiTieu_V2Model.FK__Fml_Expen__Ec_ID__6FE99F9F" FromRole="ExpenseCategory" ToRole="Fml_ExpenseInfo" />
-          <NavigationProperty Name="Psn_ExpenseInfo" Relationship="QuanLiChiTieu_V2Model.FK__Psn_Expen__Ec_ID__76969D2E" FromRole="ExpenseCategory" ToRole="Psn_ExpenseInfo" />
+          <Property Name="Ec_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Fml_ExpenseInfo" Relationship="Self.FK__Fml_Expen__Ec_ID__6FE99F9F" FromRole="ExpenseCategories" ToRole="Fml_ExpenseInfo" />
+          <NavigationProperty Name="Psn_ExpenseInfo" Relationship="Self.FK__Psn_Expen__Ec_ID__76969D2E" FromRole="ExpenseCategories" ToRole="Psn_ExpenseInfo" />
         </EntityType>
         <EntityType Name="Fml_ExpenseInfo">
           <Key>
@@ -337,8 +280,8 @@
           <Property Name="F_expI_Note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Ec_ID" Type="Int32" Nullable="false" />
           <Property Name="F_exp_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ExpenseCategory" Relationship="QuanLiChiTieu_V2Model.FK__Fml_Expen__Ec_ID__6FE99F9F" FromRole="Fml_ExpenseInfo" ToRole="ExpenseCategory" />
-          <NavigationProperty Name="Fml_Expenses" Relationship="QuanLiChiTieu_V2Model.FK__Fml_Expen__F_exp__70DDC3D8" FromRole="Fml_ExpenseInfo" ToRole="Fml_Expenses" />
+          <NavigationProperty Name="ExpenseCategories" Relationship="Self.FK__Fml_Expen__Ec_ID__6FE99F9F" FromRole="Fml_ExpenseInfo" ToRole="ExpenseCategories" />
+          <NavigationProperty Name="Fml_Expenses" Relationship="Self.FK__Fml_Expen__F_exp__70DDC3D8" FromRole="Fml_ExpenseInfo" ToRole="Fml_Expenses" />
         </EntityType>
         <EntityType Name="Fml_Expenses">
           <Key>
@@ -347,10 +290,10 @@
           <Property Name="F_exp_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="F_exp_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="F_exp_Date" Type="DateTime" Precision="0" />
-          <Property Name="F_exp_Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="Fml_ExpenseInfo" Relationship="QuanLiChiTieu_V2Model.FK__Fml_Expen__F_exp__70DDC3D8" FromRole="Fml_Expenses" ToRole="Fml_ExpenseInfo" />
+          <Property Name="F_exp_Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Fml_ExpenseInfo" Relationship="Self.FK__Fml_Expen__F_exp__70DDC3D8" FromRole="Fml_Expenses" ToRole="Fml_ExpenseInfo" />
         </EntityType>
-        <EntityType Name="Image">
+        <EntityType Name="Images">
           <Key>
             <PropertyRef Name="Img_ID" />
           </Key>
@@ -368,8 +311,8 @@
           <Property Name="P_expI_Note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Ec_ID" Type="Int32" Nullable="false" />
           <Property Name="P_exp_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ExpenseCategory" Relationship="QuanLiChiTieu_V2Model.FK__Psn_Expen__Ec_ID__76969D2E" FromRole="Psn_ExpenseInfo" ToRole="ExpenseCategory" />
-          <NavigationProperty Name="Psn_Expenses" Relationship="QuanLiChiTieu_V2Model.FK__Psn_Expen__P_exp__778AC167" FromRole="Psn_ExpenseInfo" ToRole="Psn_Expenses" />
+          <NavigationProperty Name="ExpenseCategories" Relationship="Self.FK__Psn_Expen__Ec_ID__76969D2E" FromRole="Psn_ExpenseInfo" ToRole="ExpenseCategories" />
+          <NavigationProperty Name="Psn_Expenses" Relationship="Self.FK__Psn_Expen__P_exp__778AC167" FromRole="Psn_ExpenseInfo" ToRole="Psn_Expenses" />
         </EntityType>
         <EntityType Name="Psn_Expenses">
           <Key>
@@ -378,16 +321,16 @@
           <Property Name="P_exp_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="P_exp_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="P_exp_Date" Type="DateTime" Precision="0" />
-          <Property Name="P_exp_Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="Psn_ExpenseInfo" Relationship="QuanLiChiTieu_V2Model.FK__Psn_Expen__P_exp__778AC167" FromRole="Psn_Expenses" ToRole="Psn_ExpenseInfo" />
+          <Property Name="P_exp_Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Psn_ExpenseInfo" Relationship="Self.FK__Psn_Expen__P_exp__778AC167" FromRole="Psn_Expenses" ToRole="Psn_ExpenseInfo" />
         </EntityType>
-        <EntityType Name="RevenueCategory">
+        <EntityType Name="RevenueCategories">
           <Key>
             <PropertyRef Name="RevCateg_ID" />
           </Key>
           <Property Name="RevCateg_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RevCateg_Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="RevenueInfoes" Relationship="QuanLiChiTieu_V2Model.FK__RevenueIn__RevCa__656C112C" FromRole="RevenueCategory" ToRole="RevenueInfo" />
+          <Property Name="RevCateg_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RevenueInfo" Relationship="Self.FK__RevenueIn__RevCa__656C112C" FromRole="RevenueCategories" ToRole="RevenueInfo" />
         </EntityType>
         <EntityType Name="RevenueInfo">
           <Key>
@@ -397,20 +340,20 @@
           <Property Name="RevI_Note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Rev_ID" Type="Int32" Nullable="false" />
           <Property Name="RevCateg_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="RevenueCategory" Relationship="QuanLiChiTieu_V2Model.FK__RevenueIn__RevCa__656C112C" FromRole="RevenueInfo" ToRole="RevenueCategory" />
-          <NavigationProperty Name="Revenue" Relationship="QuanLiChiTieu_V2Model.FK__RevenueIn__Rev_I__6477ECF3" FromRole="RevenueInfo" ToRole="Revenue" />
+          <NavigationProperty Name="RevenueCategories" Relationship="Self.FK__RevenueIn__RevCa__656C112C" FromRole="RevenueInfo" ToRole="RevenueCategories" />
+          <NavigationProperty Name="Revenues" Relationship="Self.FK__RevenueIn__Rev_I__6477ECF3" FromRole="RevenueInfo" ToRole="Revenues" />
         </EntityType>
-        <EntityType Name="Revenue">
+        <EntityType Name="Revenues">
           <Key>
             <PropertyRef Name="Rev_ID" />
           </Key>
           <Property Name="Rev_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Rev_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Rev_Date" Type="DateTime" Precision="0" />
-          <Property Name="Rev_Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="RevenueInfoes" Relationship="QuanLiChiTieu_V2Model.FK__RevenueIn__Rev_I__6477ECF3" FromRole="Revenue" ToRole="RevenueInfo" />
+          <Property Name="Rev_Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="RevenueInfo" Relationship="Self.FK__RevenueIn__Rev_I__6477ECF3" FromRole="Revenues" ToRole="RevenueInfo" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="Users">
           <Key>
             <PropertyRef Name="u_id" />
           </Key>
@@ -419,9 +362,9 @@
           <Property Name="u_Avatar_URL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="u_Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="AccID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Account" Relationship="QuanLiChiTieu_V2Model.FK__Users__AccID__4BAC3F29" FromRole="User" ToRole="Account" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__Users__AccID__4BAC3F29" FromRole="Users" ToRole="Accounts" />
         </EntityType>
-        <EntityType Name="Video">
+        <EntityType Name="Videos">
           <Key>
             <PropertyRef Name="Vid_ID" />
           </Key>
@@ -432,22 +375,22 @@
           <Property Name="Vid_Type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__Users__AccID__4BAC3F29">
-          <End Type="QuanLiChiTieu_V2Model.Account" Role="Account" Multiplicity="1" />
-          <End Type="QuanLiChiTieu_V2Model.User" Role="User" Multiplicity="*" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Account">
+            <Principal Role="Accounts">
               <PropertyRef Name="AccID" />
             </Principal>
-            <Dependent Role="User">
+            <Dependent Role="Users">
               <PropertyRef Name="AccID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Fml_Expen__Ec_ID__6FE99F9F">
-          <End Type="QuanLiChiTieu_V2Model.ExpenseCategory" Role="ExpenseCategory" Multiplicity="1" />
-          <End Type="QuanLiChiTieu_V2Model.Fml_ExpenseInfo" Role="Fml_ExpenseInfo" Multiplicity="*" />
+          <End Role="ExpenseCategories" Type="Self.ExpenseCategories" Multiplicity="1" />
+          <End Role="Fml_ExpenseInfo" Type="Self.Fml_ExpenseInfo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ExpenseCategory">
+            <Principal Role="ExpenseCategories">
               <PropertyRef Name="Ec_ID" />
             </Principal>
             <Dependent Role="Fml_ExpenseInfo">
@@ -456,10 +399,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Psn_Expen__Ec_ID__76969D2E">
-          <End Type="QuanLiChiTieu_V2Model.ExpenseCategory" Role="ExpenseCategory" Multiplicity="1" />
-          <End Type="QuanLiChiTieu_V2Model.Psn_ExpenseInfo" Role="Psn_ExpenseInfo" Multiplicity="*" />
+          <End Role="ExpenseCategories" Type="Self.ExpenseCategories" Multiplicity="1" />
+          <End Role="Psn_ExpenseInfo" Type="Self.Psn_ExpenseInfo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ExpenseCategory">
+            <Principal Role="ExpenseCategories">
               <PropertyRef Name="Ec_ID" />
             </Principal>
             <Dependent Role="Psn_ExpenseInfo">
@@ -468,8 +411,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Fml_Expen__F_exp__70DDC3D8">
-          <End Type="QuanLiChiTieu_V2Model.Fml_Expenses" Role="Fml_Expenses" Multiplicity="1" />
-          <End Type="QuanLiChiTieu_V2Model.Fml_ExpenseInfo" Role="Fml_ExpenseInfo" Multiplicity="*" />
+          <End Role="Fml_Expenses" Type="Self.Fml_Expenses" Multiplicity="1" />
+          <End Role="Fml_ExpenseInfo" Type="Self.Fml_ExpenseInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Fml_Expenses">
               <PropertyRef Name="F_exp_ID" />
@@ -480,8 +423,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Psn_Expen__P_exp__778AC167">
-          <End Type="QuanLiChiTieu_V2Model.Psn_Expenses" Role="Psn_Expenses" Multiplicity="1" />
-          <End Type="QuanLiChiTieu_V2Model.Psn_ExpenseInfo" Role="Psn_ExpenseInfo" Multiplicity="*" />
+          <End Role="Psn_Expenses" Type="Self.Psn_Expenses" Multiplicity="1" />
+          <End Role="Psn_ExpenseInfo" Type="Self.Psn_ExpenseInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Psn_Expenses">
               <PropertyRef Name="P_exp_ID" />
@@ -492,10 +435,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__RevenueIn__RevCa__656C112C">
-          <End Type="QuanLiChiTieu_V2Model.RevenueCategory" Role="RevenueCategory" Multiplicity="1" />
-          <End Type="QuanLiChiTieu_V2Model.RevenueInfo" Role="RevenueInfo" Multiplicity="*" />
+          <End Role="RevenueCategories" Type="Self.RevenueCategories" Multiplicity="1" />
+          <End Role="RevenueInfo" Type="Self.RevenueInfo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="RevenueCategory">
+            <Principal Role="RevenueCategories">
               <PropertyRef Name="RevCateg_ID" />
             </Principal>
             <Dependent Role="RevenueInfo">
@@ -504,10 +447,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__RevenueIn__Rev_I__6477ECF3">
-          <End Type="QuanLiChiTieu_V2Model.Revenue" Role="Revenue" Multiplicity="1" />
-          <End Type="QuanLiChiTieu_V2Model.RevenueInfo" Role="RevenueInfo" Multiplicity="*" />
+          <End Role="Revenues" Type="Self.Revenues" Multiplicity="1" />
+          <End Role="RevenueInfo" Type="Self.RevenueInfo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Revenue">
+            <Principal Role="Revenues">
               <PropertyRef Name="Rev_ID" />
             </Principal>
             <Dependent Role="RevenueInfo">
@@ -515,12 +458,189 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="QuanLiChiTieu_V2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" />
+          <EntitySet Name="ExpenseCategories" EntityType="Self.ExpenseCategories" />
+          <EntitySet Name="Fml_ExpenseInfo" EntityType="Self.Fml_ExpenseInfo" />
+          <EntitySet Name="Fml_Expenses" EntityType="Self.Fml_Expenses" />
+          <EntitySet Name="Images" EntityType="Self.Images" />
+          <EntitySet Name="Psn_ExpenseInfo" EntityType="Self.Psn_ExpenseInfo" />
+          <EntitySet Name="Psn_Expenses" EntityType="Self.Psn_Expenses" />
+          <EntitySet Name="RevenueCategories" EntityType="Self.RevenueCategories" />
+          <EntitySet Name="RevenueInfo" EntityType="Self.RevenueInfo" />
+          <EntitySet Name="Revenues" EntityType="Self.Revenues" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Videos" EntityType="Self.Videos" />
+          <AssociationSet Name="FK__Users__AccID__4BAC3F29" Association="Self.FK__Users__AccID__4BAC3F29">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fml_Expen__Ec_ID__6FE99F9F" Association="Self.FK__Fml_Expen__Ec_ID__6FE99F9F">
+            <End Role="ExpenseCategories" EntitySet="ExpenseCategories" />
+            <End Role="Fml_ExpenseInfo" EntitySet="Fml_ExpenseInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Psn_Expen__Ec_ID__76969D2E" Association="Self.FK__Psn_Expen__Ec_ID__76969D2E">
+            <End Role="ExpenseCategories" EntitySet="ExpenseCategories" />
+            <End Role="Psn_ExpenseInfo" EntitySet="Psn_ExpenseInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fml_Expen__F_exp__70DDC3D8" Association="Self.FK__Fml_Expen__F_exp__70DDC3D8">
+            <End Role="Fml_Expenses" EntitySet="Fml_Expenses" />
+            <End Role="Fml_ExpenseInfo" EntitySet="Fml_ExpenseInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Psn_Expen__P_exp__778AC167" Association="Self.FK__Psn_Expen__P_exp__778AC167">
+            <End Role="Psn_Expenses" EntitySet="Psn_Expenses" />
+            <End Role="Psn_ExpenseInfo" EntitySet="Psn_ExpenseInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RevenueIn__RevCa__656C112C" Association="Self.FK__RevenueIn__RevCa__656C112C">
+            <End Role="RevenueCategories" EntitySet="RevenueCategories" />
+            <End Role="RevenueInfo" EntitySet="RevenueInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RevenueIn__Rev_I__6477ECF3" Association="Self.FK__RevenueIn__Rev_I__6477ECF3">
+            <End Role="Revenues" EntitySet="Revenues" />
+            <End Role="RevenueInfo" EntitySet="RevenueInfo" />
+          </AssociationSet>
+          <FunctionImport Name="USP_LOGIN" ReturnType="Collection(QuanLiChiTieu_V2Model.USP_LOGIN_Result)">
+            <Parameter Name="accName" Mode="In" Type="String" />
+            <Parameter Name="accPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="USP_UpdateAccount">
+            <Parameter Name="AccID" Mode="In" Type="String" />
+            <Parameter Name="AccDisplayName" Mode="In" Type="String" />
+            <Parameter Name="AccNewPassword" Mode="In" Type="String" />
+            <Parameter Name="AccPasswordConfirm" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="USP_LOGIN_Result">
+          <Property Type="Int32" Name="AccID" Nullable="false" />
+          <Property Type="String" Name="AccName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="AccPassword" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="AccDisplayname" Nullable="true" MaxLength="250" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="QuanLiChiTieu_V2ModelStoreContainer" CdmEntityContainer="QuanLiChiTieu_V2Entities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Accounts">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="AccID" ColumnName="AccID" />
+                <ScalarProperty Name="AccName" ColumnName="AccName" />
+                <ScalarProperty Name="AccPassword" ColumnName="AccPassword" />
+                <ScalarProperty Name="AccDisplayname" ColumnName="AccDisplayname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpenseCategories">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.ExpenseCategories">
+              <MappingFragment StoreEntitySet="ExpenseCategories">
+                <ScalarProperty Name="Ec_ID" ColumnName="Ec_ID" />
+                <ScalarProperty Name="Ec_Name" ColumnName="Ec_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fml_ExpenseInfo">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Fml_ExpenseInfo">
+              <MappingFragment StoreEntitySet="Fml_ExpenseInfo">
+                <ScalarProperty Name="F_expI_ID" ColumnName="F_expI_ID" />
+                <ScalarProperty Name="F_expI_Note" ColumnName="F_expI_Note" />
+                <ScalarProperty Name="Ec_ID" ColumnName="Ec_ID" />
+                <ScalarProperty Name="F_exp_ID" ColumnName="F_exp_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fml_Expenses">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Fml_Expenses">
+              <MappingFragment StoreEntitySet="Fml_Expenses">
+                <ScalarProperty Name="F_exp_ID" ColumnName="F_exp_ID" />
+                <ScalarProperty Name="F_exp_Name" ColumnName="F_exp_Name" />
+                <ScalarProperty Name="F_exp_Date" ColumnName="F_exp_Date" />
+                <ScalarProperty Name="F_exp_Price" ColumnName="F_exp_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Images">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="Img_ID" ColumnName="Img_ID" />
+                <ScalarProperty Name="Img_Name" ColumnName="Img_Name" />
+                <ScalarProperty Name="Img_Url" ColumnName="Img_Url" />
+                <ScalarProperty Name="Img_Relation_ID" ColumnName="Img_Relation_ID" />
+                <ScalarProperty Name="Img_Type" ColumnName="Img_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Psn_ExpenseInfo">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Psn_ExpenseInfo">
+              <MappingFragment StoreEntitySet="Psn_ExpenseInfo">
+                <ScalarProperty Name="P_expI_ID" ColumnName="P_expI_ID" />
+                <ScalarProperty Name="P_expI_Note" ColumnName="P_expI_Note" />
+                <ScalarProperty Name="Ec_ID" ColumnName="Ec_ID" />
+                <ScalarProperty Name="P_exp_ID" ColumnName="P_exp_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Psn_Expenses">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Psn_Expenses">
+              <MappingFragment StoreEntitySet="Psn_Expenses">
+                <ScalarProperty Name="P_exp_ID" ColumnName="P_exp_ID" />
+                <ScalarProperty Name="P_exp_Name" ColumnName="P_exp_Name" />
+                <ScalarProperty Name="P_exp_Date" ColumnName="P_exp_Date" />
+                <ScalarProperty Name="P_exp_Price" ColumnName="P_exp_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RevenueCategories">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.RevenueCategories">
+              <MappingFragment StoreEntitySet="RevenueCategories">
+                <ScalarProperty Name="RevCateg_ID" ColumnName="RevCateg_ID" />
+                <ScalarProperty Name="RevCateg_Name" ColumnName="RevCateg_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RevenueInfo">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.RevenueInfo">
+              <MappingFragment StoreEntitySet="RevenueInfo">
+                <ScalarProperty Name="RevI_ID" ColumnName="RevI_ID" />
+                <ScalarProperty Name="RevI_Note" ColumnName="RevI_Note" />
+                <ScalarProperty Name="Rev_ID" ColumnName="Rev_ID" />
+                <ScalarProperty Name="RevCateg_ID" ColumnName="RevCateg_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Revenues">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Revenues">
+              <MappingFragment StoreEntitySet="Revenues">
+                <ScalarProperty Name="Rev_ID" ColumnName="Rev_ID" />
+                <ScalarProperty Name="Rev_Name" ColumnName="Rev_Name" />
+                <ScalarProperty Name="Rev_Date" ColumnName="Rev_Date" />
+                <ScalarProperty Name="Rev_Price" ColumnName="Rev_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="u_birth" ColumnName="u_birth" />
+                <ScalarProperty Name="u_Avatar_URL" ColumnName="u_Avatar_URL" />
+                <ScalarProperty Name="u_Address" ColumnName="u_Address" />
+                <ScalarProperty Name="AccID" ColumnName="AccID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Videos">
+            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Videos">
+              <MappingFragment StoreEntitySet="Videos">
+                <ScalarProperty Name="Vid_ID" ColumnName="Vid_ID" />
+                <ScalarProperty Name="Vid_Name" ColumnName="Vid_Name" />
+                <ScalarProperty Name="Vid_Url" ColumnName="Vid_Url" />
+                <ScalarProperty Name="Vid_Relation_ID" ColumnName="Vid_Relation_ID" />
+                <ScalarProperty Name="Vid_Type" ColumnName="Vid_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="USP_LOGIN" FunctionName="QuanLiChiTieu_V2Model.Store.USP_LOGIN">
             <ResultMapping>
               <ComplexTypeMapping TypeName="QuanLiChiTieu_V2Model.USP_LOGIN_Result">
@@ -532,125 +652,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="USP_UpdateAccount" FunctionName="QuanLiChiTieu_V2Model.Store.USP_UpdateAccount" />
-          <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Account">
-              <MappingFragment StoreEntitySet="Accounts">
-                <ScalarProperty Name="AccDisplayname" ColumnName="AccDisplayname" />
-                <ScalarProperty Name="AccPassword" ColumnName="AccPassword" />
-                <ScalarProperty Name="AccName" ColumnName="AccName" />
-                <ScalarProperty Name="AccID" ColumnName="AccID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ExpenseCategories">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.ExpenseCategory">
-              <MappingFragment StoreEntitySet="ExpenseCategories">
-                <ScalarProperty Name="Ec_Name" ColumnName="Ec_Name" />
-                <ScalarProperty Name="Ec_ID" ColumnName="Ec_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Fml_ExpenseInfo">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Fml_ExpenseInfo">
-              <MappingFragment StoreEntitySet="Fml_ExpenseInfo">
-                <ScalarProperty Name="F_exp_ID" ColumnName="F_exp_ID" />
-                <ScalarProperty Name="Ec_ID" ColumnName="Ec_ID" />
-                <ScalarProperty Name="F_expI_Note" ColumnName="F_expI_Note" />
-                <ScalarProperty Name="F_expI_ID" ColumnName="F_expI_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Fml_Expenses">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Fml_Expenses">
-              <MappingFragment StoreEntitySet="Fml_Expenses">
-                <ScalarProperty Name="F_exp_Price" ColumnName="F_exp_Price" />
-                <ScalarProperty Name="F_exp_Date" ColumnName="F_exp_Date" />
-                <ScalarProperty Name="F_exp_Name" ColumnName="F_exp_Name" />
-                <ScalarProperty Name="F_exp_ID" ColumnName="F_exp_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Images">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Image">
-              <MappingFragment StoreEntitySet="Images">
-                <ScalarProperty Name="Img_Type" ColumnName="Img_Type" />
-                <ScalarProperty Name="Img_Relation_ID" ColumnName="Img_Relation_ID" />
-                <ScalarProperty Name="Img_Url" ColumnName="Img_Url" />
-                <ScalarProperty Name="Img_Name" ColumnName="Img_Name" />
-                <ScalarProperty Name="Img_ID" ColumnName="Img_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Psn_ExpenseInfo">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Psn_ExpenseInfo">
-              <MappingFragment StoreEntitySet="Psn_ExpenseInfo">
-                <ScalarProperty Name="P_exp_ID" ColumnName="P_exp_ID" />
-                <ScalarProperty Name="Ec_ID" ColumnName="Ec_ID" />
-                <ScalarProperty Name="P_expI_Note" ColumnName="P_expI_Note" />
-                <ScalarProperty Name="P_expI_ID" ColumnName="P_expI_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Psn_Expenses">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Psn_Expenses">
-              <MappingFragment StoreEntitySet="Psn_Expenses">
-                <ScalarProperty Name="P_exp_Price" ColumnName="P_exp_Price" />
-                <ScalarProperty Name="P_exp_Date" ColumnName="P_exp_Date" />
-                <ScalarProperty Name="P_exp_Name" ColumnName="P_exp_Name" />
-                <ScalarProperty Name="P_exp_ID" ColumnName="P_exp_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RevenueCategories">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.RevenueCategory">
-              <MappingFragment StoreEntitySet="RevenueCategories">
-                <ScalarProperty Name="RevCateg_Name" ColumnName="RevCateg_Name" />
-                <ScalarProperty Name="RevCateg_ID" ColumnName="RevCateg_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RevenueInfoes">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.RevenueInfo">
-              <MappingFragment StoreEntitySet="RevenueInfo">
-                <ScalarProperty Name="RevCateg_ID" ColumnName="RevCateg_ID" />
-                <ScalarProperty Name="Rev_ID" ColumnName="Rev_ID" />
-                <ScalarProperty Name="RevI_Note" ColumnName="RevI_Note" />
-                <ScalarProperty Name="RevI_ID" ColumnName="RevI_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Revenues">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Revenue">
-              <MappingFragment StoreEntitySet="Revenues">
-                <ScalarProperty Name="Rev_Price" ColumnName="Rev_Price" />
-                <ScalarProperty Name="Rev_Date" ColumnName="Rev_Date" />
-                <ScalarProperty Name="Rev_Name" ColumnName="Rev_Name" />
-                <ScalarProperty Name="Rev_ID" ColumnName="Rev_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="AccID" ColumnName="AccID" />
-                <ScalarProperty Name="u_Address" ColumnName="u_Address" />
-                <ScalarProperty Name="u_Avatar_URL" ColumnName="u_Avatar_URL" />
-                <ScalarProperty Name="u_birth" ColumnName="u_birth" />
-                <ScalarProperty Name="u_id" ColumnName="u_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Videos">
-            <EntityTypeMapping TypeName="QuanLiChiTieu_V2Model.Video">
-              <MappingFragment StoreEntitySet="Videos">
-                <ScalarProperty Name="Vid_Type" ColumnName="Vid_Type" />
-                <ScalarProperty Name="Vid_Relation_ID" ColumnName="Vid_Relation_ID" />
-                <ScalarProperty Name="Vid_Url" ColumnName="Vid_Url" />
-                <ScalarProperty Name="Vid_Name" ColumnName="Vid_Name" />
-                <ScalarProperty Name="Vid_ID" ColumnName="Vid_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -665,7 +666,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

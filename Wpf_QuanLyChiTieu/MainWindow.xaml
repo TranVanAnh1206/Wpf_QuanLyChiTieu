@@ -32,7 +32,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid>
+    <Grid x:Name="rootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -67,6 +67,7 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Row="0">
@@ -80,10 +81,10 @@
                                 <Grid Grid.Column="0" Margin="5 0 0 0">
                                     <Grid>
                                         <Button materialDesign:ButtonAssist.CornerRadius="10"
-                                            Command="{Binding FamilyExpenseWindowCommand}"
-                                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                            Style="{StaticResource MaterialDesignRaisedButton}"
-                                            ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                                    Command="{Binding FamilyExpenseWindowCommand}"
+                                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                    Style="{StaticResource MaterialDesignRaisedButton}"
+                                                    ToolTip="Chi tiêu gia đinh">
                                             <TextBlock Text="Chi tiêu gia đình" />
                                         </Button>
                                     </Grid>
@@ -95,7 +96,7 @@
                                                 Command="{Binding PersonalExpenseWindowCommand}"
                                                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                                 Style="{StaticResource MaterialDesignRaisedButton}"
-                                                ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                                ToolTip="Chi tiêu cá nhân">
                                             <TextBlock Text="Chi tiêu Cá nhân" />
                                         </Button>
                                     </Grid>
@@ -104,9 +105,10 @@
                                 <Grid Grid.Column="2">
                                     <Grid>
                                         <Button materialDesign:ButtonAssist.CornerRadius="10"
-                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                                Style="{StaticResource MaterialDesignRaisedButton}"
-                                                ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                    Style="{StaticResource MaterialDesignRaisedButton}"
+                                                    Command="{Binding RevenuesWindowCommand}"
+                                                    ToolTip="Thu nhập cá nhân">
                                             <TextBlock Text="Thu nhập" />
                                         </Button>
                                     </Grid>
@@ -132,7 +134,7 @@
 
                                     <TextBlock Grid.Row="2" Margin="16,5,16,8"
                                            HorizontalAlignment="Left" VerticalAlignment="Center"
-                                           FontSize="18"
+                                           FontSize="16"
                                            Style="{StaticResource MaterialDesignBody2TextBlock}"
                                            Text="Welcom to spending management application" />
                                 </Grid>
@@ -147,37 +149,31 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid Grid.Column="0">
-                                <materialDesign:Card Width="Auto" Padding="0"
-                                      Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                                <materialDesign:Card Width="Auto" Padding="0" Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
 
-                                        <TextBlock Grid.Row="0" Margin="16,16,16,4"
-                                              Style="{StaticResource MaterialDesignHeadline5TextBlock}">
+                                        <TextBlock Grid.Row="0" Margin="16,16,16,4" Style="{StaticResource MaterialDesignHeadline5TextBlock}">
                                             <Run Text="Tổng chi tiêu gia đình tháng"/>
                                             <Run Text="{Binding CurrentMonth}"/>
                                         </TextBlock>
 
                                         <Separator Grid.Row="1"  Style="{StaticResource MaterialDesignLightSeparator}" />
 
-                                        <TextBlock Grid.Row="2"
-                                              Margin="16,0,16,8"
-                                              FontSize="25"
-                                              HorizontalAlignment="Left"
-                                              VerticalAlignment="Center"
-                                              Style="{StaticResource MaterialDesignBody2TextBlock}"
-                                              Text="{Binding TotalExpense, StringFormat='{}{0:N0} VND'}" />
+                                        <TextBlock Grid.Row="2" Margin="16,0,16,8" FontSize="25" 
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                  Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                                  Text="{Binding TotalExpense, StringFormat='{}{0:N0} VND'}" />
 
                                     </Grid>
                                 </materialDesign:Card>
                             </Grid>
 
                             <Grid Grid.Column="1" Margin="10 0 10 0">
-                                <materialDesign:Card Width="Auto" Padding="0"
-                                                Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                                <materialDesign:Card Width="Auto" Padding="0" Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
@@ -244,7 +240,7 @@
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" BorderThickness="1" CornerRadius="20" BorderBrush="Transparent">
+                                                <Border Background="{TemplateBinding Background}" BorderThickness="1" CornerRadius="10" BorderBrush="Transparent">
                                                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                             </ControlTemplate>
@@ -326,10 +322,10 @@
 
                             <Grid Grid.Column="2">
                                 <ComboBox x:Name="MW_CBox_Fill"
-                                          materialDesign:HintAssist.Hint="Chọn loại chi tiêu"
-                                          ItemsSource="{Binding ExpType_List}"
-                                          SelectedItem="{Binding SelectedExpType}"
-                                          DisplayMemberPath="ExpType_Name"
+                                          materialDesign:HintAssist.Hint="Chọn danh mục"
+                                          ItemsSource="{Binding Categories_List}"
+                                          SelectedItem="{Binding SelectedCategory}"
+                                          DisplayMemberPath="Category"
                                           Style="{StaticResource MaterialDesignOutlinedComboBox}" />
                             </Grid>
 
@@ -342,20 +338,34 @@
                             </Grid>
                         </Grid>
 
-                        <Grid Grid.Row="4">
-                            <ListView ItemsSource="{Binding Exp_List}"
+                        <DockPanel Grid.Row="4">
+                            <Grid DockPanel.Dock="Top">
+                                <!--<ProgressBar IsIndeterminate="True" />-->
+                                <ListView ItemsSource="{Binding Exp_List}"
                                       Margin="0,0,-0.4,-0.2" 
                                       ScrollViewer.VerticalScrollBarVisibility="Auto">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="Ngày tháng" DisplayMemberBinding="{Binding Exp_Date, StringFormat={}{0:dd/MM/yyyy}}"></GridViewColumn>
-                                        <GridViewColumn Header="Tên" DisplayMemberBinding="{Binding Exp_Name}"></GridViewColumn>
-                                        <GridViewColumn Header="Giá thành" DisplayMemberBinding="{Binding Exp_Price, StringFormat='{}{0:N0} VND'}"></GridViewColumn>
-                                        <GridViewColumn Header="Loại chi tiêu" DisplayMemberBinding="{Binding ExpTypeName}"></GridViewColumn>
-                                        <GridViewColumn Header="Ghi chú" DisplayMemberBinding="{Binding Exp_Note}"></GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Ngày tháng" DisplayMemberBinding="{Binding Exp_Date, StringFormat={}{0:dd/MM/yyyy}}"></GridViewColumn>
+                                            <GridViewColumn Header="Tên" DisplayMemberBinding="{Binding Exp_Name}"></GridViewColumn>
+                                            <GridViewColumn Header="Giá thành" DisplayMemberBinding="{Binding Exp_Price, StringFormat='{}{0:N0} VND'}"></GridViewColumn>
+                                            <GridViewColumn Header="Loại chi tiêu" DisplayMemberBinding="{Binding ExpTypeName}"></GridViewColumn>
+                                            <GridViewColumn Header="Ghi chú" DisplayMemberBinding="{Binding Exp_Note}"></GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </DockPanel>
+
+                        <Grid Grid.Row="5">
+                            <Grid DockPanel.Dock="Bottom" Margin="0 12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold">Tổng tiền :</TextBlock>
+                                <TextBlock Grid.Column="1" FontSize="25" Text="{Binding TotalAmount, StringFormat='{}{0:N0} VND'}" FontWeight="Bold"></TextBlock>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -370,45 +380,58 @@
                         </StackPanel>
                     </TabItem.Header>
 
-                    <Grid Margin="16" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
+                    <Grid Margin="16">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0">
-                                <DockPanel>
-                                    <TextBlock DockPanel.Dock="Left" FontSize="28" Padding="10" Text="Thống kê chi tiêu"/>
-                                    <StackPanel Margin="20 0 0 0" DockPanel.Dock="Left" Orientation="Horizontal">
-                                        <ComboBox x:Name="OutlinedComboBox"
+                                <Grid Grid.Row="0">
+                                    <DockPanel>
+                                        <TextBlock DockPanel.Dock="Left" FontSize="28" Padding="10" Text="Thống kê chi tiêu"/>
+                                        <StackPanel Margin="20 0 0 0" DockPanel.Dock="Left" Orientation="Horizontal">
+                                            <ComboBox x:Name="OutlinedComboBox"
                                                     Width="256"
-                                                    materialDesign:HintAssist.Hint="Some item"
+                                                    materialDesign:HintAssist.Hint="Chọn "
                                                     IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}"
-                                                    ItemsSource="{Binding ShortStringList}"
+                                                    ItemsSource="{Binding Categories_List}"
+                                                  DisplayMemberPath="Category"
                                                     Style="{StaticResource MaterialDesignOutlinedComboBox}" />
-                                        
-                                        
-                                    </StackPanel>
-                                    <Button Width="200" DockPanel.Dock="Right" Content="Xuất file excel"/>
-                                </DockPanel>
 
-                            </Grid>
 
-                            <Grid Grid.Row="1">
-                                <lvc:CartesianChart Series="{Binding SeriesCollection}"
-                                                    FontSize="18" Height="670"
+                                        </StackPanel>
+                                        <Button Width="200" DockPanel.Dock="Right"
+                                            x:Name="exportFile_Btn"
+                                            Command="{Binding ExportToExcelCommand}"
+                                            CommandParameter="{Binding ElementName=exportFile_Btn}"
+                                            Content="Xuất file excel"/>
+
+                                    </DockPanel>
+
+                                </Grid>
+
+                                <Grid Grid.Row="1">
+                                    <lvc:CartesianChart Series="{Binding SeriesCollection}"
+                                                    FontSize="16" 
                                                     LegendLocation="Top">
-                                    <lvc:CartesianChart.AxisX>
-                                        <lvc:Axis Title="Tháng" FontSize="17" Labels="{Binding Lable}"/>
-                                    </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Title="Tháng" FontSize="17" Labels="{Binding Lable}"/>
+                                        </lvc:CartesianChart.AxisX>
 
-                                    <lvc:CartesianChart.AxisY>
-                                        <lvc:Axis Title="Số tiền (VND)" FontSize="17"/>
-                                    </lvc:CartesianChart.AxisY>
-                                </lvc:CartesianChart>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Title="Số tiền (VND)" FontSize="17"/>
+                                        </lvc:CartesianChart.AxisY>
+                                    </lvc:CartesianChart>
+                                </Grid>
+
+                                <materialDesign:Snackbar Background="{Binding SnackBar_Bg}" 
+                                                         Panel.ZIndex="1" x:Name="SnackbarThree" 
+                                                         MessageQueue="{Binding MessageQueue}"/>
                             </Grid>
-                        </Grid>
+                        </ScrollViewer>
                     </Grid>
                 </TabItem>
 
@@ -440,16 +463,11 @@
                         </StackPanel>
                     </TabItem.Header>
                     <StackPanel Margin="16">
-                        <TextBlock Margin="0,0,0,8"
+                        <TextBlock Margin="0,0,0,8" FontSize="30"
                                   Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                                  Text="Photos" />
+                                  Text="Cài đặt" />
                         <TextBlock>
-                                  <Run Text="tab 3 content. Default look and behaviors." />
-                                  <LineBreak />
-                                  <LineBreak />
-                                  <Run FontStyle="Italic">
-                                        Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
-                                </Run>
+
                         </TextBlock>
                     </StackPanel>
                 </TabItem>
@@ -463,29 +481,217 @@
                         </StackPanel>
                     </TabItem.Header>
                     <StackPanel Margin="16">
-                        <TextBlock Margin="0,0,0,8" Text="Sounds" 
-                                  Style="{StaticResource MaterialDesignHeadline5TextBlock}" />
-                        <TextBlock>
-                                  <Run Text="tab 4 content. Default look and behaviors." />
-                                  <LineBreak />
-                                  <LineBreak />
-                                  <Run FontStyle="Italic">
-                                    Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
-                                  </Run>
-                        </TextBlock>
-                    </StackPanel>
-                </TabItem>
+                        <TextBlock FontSize="30" TextAlignment="Center" 
+                                   Margin="0 10 0 0" FontFamily="Arial" Text="Thông tin tài khoản"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
-                <TabItem Width="Auto">
-                    <TabItem.Header>
-                        <StackPanel>
-                            <materialDesign:PackIcon Width="24" Height="24" 
-                                                    HorizontalAlignment="Center" Kind="Power" />
-                            <TextBlock Margin="0 7 0 0" HorizontalAlignment="Center" Text="Đăng xuất" />
-                        </StackPanel>
-                    </TabItem.Header>
+                            <Grid Grid.Column="0">
+                                <StackPanel>
+                                    <Image Margin="20" Source="D:\Pictures\Photos-001\240587632_377824744050389_7978120865446518616_n.jpg"/>
+                                    <Button Content="Thay đổi ảnh đại diện" 
+                                            Command="{Binding ChangedAvatarCommand}"
+                                            Margin="10 0 10 0"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Visibility="{Binding IsVisibility}" Grid.Row="0" Orientation="Vertical">
+                                    <TextBlock Margin="0 15 0 0" FontSize="16" Text="Thay đổi thông tin cá nhân"/>
+
+                                    <DockPanel>
+                                        <TextBox VerticalAlignment="Center"
+                                                 Margin="15 0 10 0" Width="Auto"
+                                                 FontSize="16"
+                                                 Text="{Binding Uid}"
+                                                  materialDesign:HintAssist.Hint="UID"
+                                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                    </DockPanel>
+
+                                    <DockPanel>
+                                        <TextBox VerticalAlignment="Center"
+                                                 Margin="15 0 10 0" Width="Auto"
+                                                 FontSize="16"
+                                                 Text="{Binding AccName}"
+                                                  materialDesign:HintAssist.Hint="Tên tài khoản"
+                                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                    </DockPanel>
+
+                                    <DockPanel>
+                                        <TextBox VerticalAlignment="Center"
+                                                 Margin="15 0 10 0" Width="Auto"
+                                                 FontSize="16" 
+                                                 Text="{Binding DisplayName}"
+                                                  materialDesign:HintAssist.Hint="Tên hiển thị"
+                                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                    </DockPanel>
+
+
+                                    <DockPanel>
+                                        <PasswordBox x:Name="PasswordBox" Margin="15 0 10 0" 
+                                                      materialDesign:HintAssist.Foreground="Green"
+                                                      materialDesign:HintAssist.Hint="Mật khẩu"
+                                                      materialDesign:TextFieldAssist.UnderlineBrush="Green"
+                                                      Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="PasswordChanged">
+                                                    <i:InvokeCommandAction Command="{Binding PasswordCommand}" 
+                                                                   CommandParameter="{Binding ElementName=PasswordBox}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </PasswordBox>
+                                    </DockPanel>
+
+                                    <DockPanel>
+                                        <TextBox VerticalAlignment="Center"
+                                                 Margin="15 0 10 0" Width="Auto"
+                                                 FontSize="16" 
+                                                 Visibility="{Binding BtnChangePassIsVisiblity}"
+                                                 Text="{Binding DisplayName}"
+                                                  materialDesign:HintAssist.Hint="Xác nhận mật khẩu"
+                                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                    </DockPanel>
+
+
+                                    <DockPanel>
+                                        <TextBox VerticalAlignment="Center"
+                                                 Margin="15 0 10 0" Width="Auto"
+                                                 FontSize="16"
+                                                 Text="{Binding UBirth, StringFormat={}{0:dd/MM/yyyy}}"
+                                                  materialDesign:HintAssist.Hint="Ngày sinh"
+                                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                    </DockPanel>
+
+                                    <DockPanel>
+                                        <TextBox VerticalAlignment="Center"
+                                                 Margin="15 0 10 0" Width="Auto"
+                                                 FontSize="16"
+                                                 Text="{Binding UAddress}"
+                                                  materialDesign:HintAssist.Hint="Địa chỉ"
+                                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                    </DockPanel>
+
+                                    <DockPanel>
+                                        <Button Command="{Binding ChangePassCommand}" Margin="10 15" Content="Thay đổi mật khẩu"></Button>
+                                    </DockPanel>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="0" Visibility="{Binding IsChangeInfoVisibility}">
+                                    <Grid Margin="0 16 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock FontSize="16" Grid.Column="0" Text="UID"/>
+
+                                        <TextBlock FontSize="16" Grid.Column="1" Text="{Binding Uid}"/>
+                                    </Grid>
+
+                                    <Grid Margin="0 16 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock FontSize="16" Grid.Column="0" Text="Tên tài khoản"/>
+
+                                        <TextBlock FontSize="16" Grid.Column="1" Text="{Binding AccName}"/>
+                                    </Grid>
+
+                                    <Grid Margin="0 16 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock FontSize="16" Grid.Column="0" Text="Tên hiển thị"/>
+
+                                        <TextBlock FontSize="16" Grid.Column="1" Text="{Binding DisplayName}"/>
+                                    </Grid>
+
+                                    <Grid Margin="0 16 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock FontSize="16" Grid.Column="0" Text="Ngày sinh"/>
+
+                                        <TextBlock FontSize="16" Grid.Column="1" Text="{Binding UBirth}"/>
+                                    </Grid>
+
+                                    <Grid Margin="0 16 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock FontSize="16" Grid.Column="0" Text="Địa chỉ"/>
+
+                                        <TextBlock FontSize="16" Grid.Column="1" Text="{Binding UAddress}"/>
+                                    </Grid>
+                                </StackPanel>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0">
+                                        <Button Command="{Binding ChangedInformationCommand}" Content="Sửa thông tin"/>
+                                    </Grid>
+
+                                    <Grid Grid.Column="1" Margin="8 0 8 0">
+                                        <Button Command="{Binding CancelCommand}" Content="Hủy"/>
+                                    </Grid>
+
+                                    <Grid Grid.Column="2" Margin="8 0 8 0">
+                                        <Button Command="{Binding SaveCommand}" Background="Green" Content="Lưu"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Margin="0,10,-0.2,0" Height="80">
+                            <Grid.Resources>
+                                <Style TargetType="Button" x:Key="Logout_Btn">
+                                    <Setter Property="Background" Value="#e9311a"/>
+                                    <Setter Property="FontSize" Value="18"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Padding" Value="0 15 0 10"/>
+                                    <Setter Property="Height" Value="40"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="#333" 
+                                                        BorderThickness="1" CornerRadius="10">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Grid.Resources>
+
+                            <Button Style="{StaticResource Logout_Btn}" Width="180" Content="Đăng xuất" Margin="939,10,10,30"/>
+                        </Grid>
+                    </StackPanel>
                 </TabItem>
             </TabControl>
         </materialDesign:Card>
     </Grid>
 </Window>
+

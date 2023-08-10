@@ -7,25 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wpf_QuanLyChiTieu.Model
+namespace QuanLyChiTieuModel.EF
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Revenue
+    public partial class Accounts
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Revenue()
+        public Accounts()
         {
-            this.RevenueInfoes = new HashSet<RevenueInfo>();
+            this.Users = new HashSet<Users>();
         }
     
-        public int Rev_ID { get; set; }
-        public string Rev_Name { get; set; }
-        public Nullable<System.DateTime> Rev_Date { get; set; }
-        public decimal Rev_Price { get; set; }
+        public int AccID { get; set; }
+        public string AccName { get; set; }
+        public string AccPassword { get; set; }
+        public string AccDisplayname { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RevenueInfo> RevenueInfoes { get; set; }
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

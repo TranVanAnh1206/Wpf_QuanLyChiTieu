@@ -54,27 +54,27 @@
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Row="0">
-                            <TextBox FontSize="18" VerticalAlignment="Center"
+                            <TextBox FontSize="15" VerticalAlignment="Center"
                                      x:Name="FmlExp_Name"
                                      Text="{Binding Exp_Name, UpdateSourceTrigger=PropertyChanged}"
                                       materialDesign:HintAssist.Hint="Vật phẩm chi tiêu"
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextChanged="FmlExp_Name_TextChanged" />
                         </Grid>
 
-                        <Grid Grid.Row="1" Margin="0, 10, 0, 0">
-                            <TextBox FontSize="18" VerticalAlignment="Center"
+                        <Grid Grid.Row="1" Margin="0, 6, 0, 0">
+                            <TextBox FontSize="15" VerticalAlignment="Center"
                                      Text="{Binding Exp_Price, UpdateSourceTrigger=PropertyChanged}"
                                       materialDesign:HintAssist.Hint="Giá thành"
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         </Grid>
 
-                        <Grid Grid.Row="2" Margin="0, 10, 0, 0">
+                        <Grid Grid.Row="2" Margin="0, 6, 0, 0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="119*"/>
                                 <ColumnDefinition Width="923*"/>
                             </Grid.ColumnDefinitions>
 
-                            <DatePicker  FontSize="18" 
+                            <DatePicker  FontSize="15" 
                                          SelectedDate="{Binding Exp_Date}"
                                          materialDesign:HintAssist.Hint="Ngày tháng" 
                                          Grid.ColumnSpan="2" 
@@ -132,9 +132,9 @@
                             </DatePicker>
                         </Grid>
 
-                        <Grid Grid.Row="3" Margin="0, 10, 0, 0">
+                        <Grid Grid.Row="3" Margin="0, 6, 0, 0">
                             <StackPanel Orientation="Vertical">
-                                <ComboBox FontSize="18" Cursor="Hand" x:Name="OutlinedComboBox"
+                                <ComboBox FontSize="15" Cursor="Hand" x:Name="OutlinedComboBox"
                                           ItemsSource="{Binding ExpCateg_List}" DisplayMemberPath="Ec_Name"
                                           SelectedItem="{Binding SelectedExpenseCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           materialDesign:HintAssist.Hint="Danh mục chi tiêu"
@@ -146,17 +146,14 @@
                             </StackPanel>
                         </Grid>
 
-                        <Grid Grid.Row="4" Margin="0, 10, 0, 0">
+                        <Grid Grid.Row="4" Margin="0, 6, 0, 0">
                             <StackPanel Margin="0 5 0 0">
-                                <TextBox FontSize="18" VerticalAlignment="Top"
-                                         Text="{Binding ExpI_Note}"
-                                         x:Name="FmlExp_Note"
-                                        Height="100"
-                                        materialDesign:HintAssist.Hint="Ghi chú"
-                                        AcceptsReturn="True"
-                                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                        TextWrapping="Wrap"
-                                        VerticalScrollBarVisibility="Auto" TextChanged="FmlExp_Note_TextChanged" />
+                                <TextBox FontSize="15" VerticalAlignment="Top"
+                                         Text="{Binding ExpI_Note}" x:Name="FmlExp_Note"
+                                        Height="70" materialDesign:HintAssist.Hint="Ghi chú"
+                                        AcceptsReturn="True" TextWrapping="Wrap"
+                                        Style="{StaticResource MaterialDesignOutlinedTextBox}"                                        
+                                        VerticalScrollBarVisibility="Auto" TextChanged="FmlExp_Note_TextChanged" Margin="0,0,0.2,0" />
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -164,9 +161,7 @@
                     <Grid Grid.Column="1" Width="300" Margin="20 0 20 0">
                         <StackPanel Orientation="Vertical">
                             <Button Content="Chọn file hình ảnh"
-                                    Command="{Binding ImportImageCommand}"
-                                    FontSize="17" Padding="10" Height="50"/>
-
+                                    Command="{Binding ImportImageCommand}" FontSize="17"/>
                             <Image Source="{Binding ImgPath}" Margin="0 10 0 10"/>
                         </StackPanel>
                     </Grid>
@@ -229,7 +224,7 @@
                 </Grid>
 
                 <Grid Grid.Row="1" VerticalAlignment="Stretch">
-                    <ListView Margin="0,0,-0.4,-0.2" 
+                    <ListView Margin="0,0,-0.4,-0.2" Name="ListExpense"
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               ItemsSource="{Binding Expenses_List}"
                               SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
@@ -250,6 +245,16 @@
                                 </GridViewColumn>
                             </GridView>
                         </ListView.View>
+
+                        <!--<ListView.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Exp_Date}"/>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ListView.GroupStyle>-->
                     </ListView>
                 </Grid>
             </Grid>

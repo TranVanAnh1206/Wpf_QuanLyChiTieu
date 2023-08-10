@@ -37,7 +37,7 @@
     </i:Interaction.Triggers>
 
     <Border CornerRadius="0" Background="#eff2f7" >
-        <Grid>
+        <Grid x:Name="rootGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition></RowDefinition>

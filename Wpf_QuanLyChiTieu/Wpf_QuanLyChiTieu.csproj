@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Wpf_QuanLyChiTieu</RootNamespace>
     <AssemblyName>Wpf_QuanLyChiTieu</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -17,6 +17,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,6 +48,15 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=6.2.6.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.6.2.6\lib\net462\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.6.1.1\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
     </Reference>
@@ -62,14 +72,30 @@
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
+    <Reference Include="Prism, Version=8.1.97.5141, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.8.1.97\lib\net47\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=8.1.97.5141, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.8.1.97\lib\net47\Prism.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -98,61 +124,7 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Account.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DataProvider.cs" />
-    <Compile Include="Model\DbContextModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbContextModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DbContextModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DbContextModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbContextModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ExpenseCategory.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Fml_ExpenseInfo.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Fml_Expenses.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Image.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Psn_ExpenseInfo.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Psn_Expenses.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Revenue.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\RevenueCategory.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\RevenueInfo.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\User.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\USP_LOGIN_Result.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Video.cs">
-      <DependentUpon>DbContextModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Model\Categories.cs" />
     <Compile Include="PersonalExpensesWindow.xaml.cs">
       <DependentUpon>PersonalExpensesWindow.xaml</DependentUpon>
     </Compile>
@@ -223,13 +195,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Model\DbContextModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DbContextModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model\DbContextModel.edmx.diagram">
-      <DependentUpon>DbContextModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -242,29 +207,25 @@
   <ItemGroup>
     <Folder Include="Images\FmlExp_Image\" />
     <Folder Include="Images\PsnExp_Image\" />
-    <Folder Include="Images\User\" />
+    <Folder Include="Model\DAO\" />
+    <Folder Include="Model\EntityFramework\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Model\SM_V2.sql" />
-    <Resource Include="Images\Avatar1.jpg" />
-    <Resource Include="Images\LogoSM_2x.ico" />
+    <Resource Include="Images\User\Avatar1.jpg" />
     <Resource Include="LogoSM_2x.ico" />
     <Resource Include="Images\IconSM.ico" />
     <Resource Include="IconSM.ico" />
     <Content Include="Model\Data.sql" />
-    <Content Include="Model\DbContextModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbContextModel.edmx</DependentUpon>
-      <LastGenOutput>DbContextModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model\DbContextModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbContextModel.edmx</DependentUpon>
-      <LastGenOutput>DbContextModel.cs</LastGenOutput>
-    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuanLyChiTieuModel\QuanLyChiTieuModel.csproj">
+      <Project>{5dc027fe-e701-4e22-a99f-9343f76edd41}</Project>
+      <Name>QuanLyChiTieuModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />

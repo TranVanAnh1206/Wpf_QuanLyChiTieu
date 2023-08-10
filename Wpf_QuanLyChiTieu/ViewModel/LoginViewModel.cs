@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyChiTieuModel.DAO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,7 +60,7 @@ namespace Wpf_QuanLyChiTieu.ViewModel
         {
             if (param == null) return;
 
-            var acc_Count = DataProvider.Instance.DB.Accounts.Where(acc => acc.AccName == Username && acc.AccPassword == Password).Count();
+            var acc_Count = new LoginDAO().LoginByStoredProcedure(Username, Password);
 
             if (acc_Count > 0)
             {

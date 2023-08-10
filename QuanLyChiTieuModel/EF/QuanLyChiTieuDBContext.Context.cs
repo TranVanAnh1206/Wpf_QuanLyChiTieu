@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wpf_QuanLyChiTieu.Model
+namespace QuanLyChiTieuModel.EF
 {
     using System;
     using System.Data.Entity;
@@ -27,18 +27,18 @@ namespace Wpf_QuanLyChiTieu.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<ExpenseCategory> ExpenseCategories { get; set; }
+        public virtual DbSet<Accounts> Accounts { get; set; }
+        public virtual DbSet<ExpenseCategories> ExpenseCategories { get; set; }
         public virtual DbSet<Fml_ExpenseInfo> Fml_ExpenseInfo { get; set; }
         public virtual DbSet<Fml_Expenses> Fml_Expenses { get; set; }
-        public virtual DbSet<Image> Images { get; set; }
+        public virtual DbSet<Images> Images { get; set; }
         public virtual DbSet<Psn_ExpenseInfo> Psn_ExpenseInfo { get; set; }
         public virtual DbSet<Psn_Expenses> Psn_Expenses { get; set; }
-        public virtual DbSet<RevenueCategory> RevenueCategories { get; set; }
-        public virtual DbSet<RevenueInfo> RevenueInfoes { get; set; }
-        public virtual DbSet<Revenue> Revenues { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Video> Videos { get; set; }
+        public virtual DbSet<RevenueCategories> RevenueCategories { get; set; }
+        public virtual DbSet<RevenueInfo> RevenueInfo { get; set; }
+        public virtual DbSet<Revenues> Revenues { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Videos> Videos { get; set; }
     
         public virtual ObjectResult<USP_LOGIN_Result> USP_LOGIN(string accName, string accPassword)
         {

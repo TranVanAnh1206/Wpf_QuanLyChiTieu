@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Desktop\CSharp\Wpf_Projects\Wpf_QuanLyChiTieu\Wpf_QuanLyChiTieu\Model\DbContextModel.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Desktop\CSharp\Wpf_Projects\Wpf_QuanLyChiTieu\QuanLyChiTieuModel\EF\QuanLyChiTieuDBContext.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

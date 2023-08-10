@@ -7,19 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wpf_QuanLyChiTieu.Model
+namespace QuanLyChiTieuModel.EF
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class RevenueInfo
+    public partial class Videos
     {
-        public int RevI_ID { get; set; }
-        public string RevI_Note { get; set; }
-        public int Rev_ID { get; set; }
-        public int RevCateg_ID { get; set; }
-    
-        public virtual RevenueCategory RevenueCategory { get; set; }
-        public virtual Revenue Revenue { get; set; }
+        public int Vid_ID { get; set; }
+        public string Vid_Name { get; set; }
+        public string Vid_Url { get; set; }
+        public Nullable<int> Vid_Relation_ID { get; set; }
+        public string Vid_Type { get; set; }
     }
 }

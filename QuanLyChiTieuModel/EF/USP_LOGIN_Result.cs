@@ -7,17 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wpf_QuanLyChiTieu.Model
+namespace QuanLyChiTieuModel.EF
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Image
+    public partial class USP_LOGIN_Result
     {
-        public int Img_ID { get; set; }
-        public string Img_Name { get; set; }
-        public string Img_Url { get; set; }
-        public Nullable<int> Img_Relation_ID { get; set; }
-        public string Img_Type { get; set; }
+        public int AccID { get; set; }
+        public string AccName { get; set; }
+        public string AccPassword { get; set; }
+        public string AccDisplayname { get; set; }
     }
 }

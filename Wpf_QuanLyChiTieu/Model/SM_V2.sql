@@ -37,6 +37,8 @@ go
 select * from Users
 go
 
+insert into Users values (N'2003-06-12', '', N'Định Tân - Yên Định - Thanh Hóa', 1)
+
 -- bảng loại thu nhập
 create table RevenueCategories
 (
@@ -85,7 +87,6 @@ go
 select * from RevenueInfo
 go
 
---	MỚI SỬA ĐẾN ĐÂY =============================================================================================
 -- Bảng Chi tiêu
 create table Fml_Expenses
 (
@@ -123,6 +124,9 @@ go
 
 select * from Psn_Expenses
 go
+
+select top(1) * from Psn_Expenses
+order by P_exp_ID desc
 
 create table Psn_ExpenseInfo
 (
@@ -193,6 +197,32 @@ create table Videos
 go
 
 SELECT * FROM Videos 
+go
+
+-- chưa tạo bảng, cần nghiên cứu thêm
+
+create table Plans
+(
+	plan_ID		INT		IDENTITY(1,1)	not null	PRIMARY KEY,
+	plan_Name	Nvarchar(255) null,
+	plan_Start	Date	not null,
+	plan_End	Date	not null
+)
+go
+
+select * from Plans
+go
+
+create table Plan_Info
+(
+	planI_ID	INT		IDENTITY(1,1)	not null	PRIMARY KEY,
+	planI_By	Nvarchar(50) null, -- theo tháng, theo năm, theo tuần, theo ngày
+	plan_Price	Money	not null,	
+	plan_ID		INT		foreign key(plan_ID)	references Plans(plan_ID)
+)
+go
+
+select * from Plan_Info
 go
 
 -- ===========================================

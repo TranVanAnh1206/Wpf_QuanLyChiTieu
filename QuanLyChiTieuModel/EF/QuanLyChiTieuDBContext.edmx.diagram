@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e1c0113186ed493597f4abc26c04567b" Name="Diagram1">
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.Accounts" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.ExpenseCategories" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.Fml_ExpenseInfo" Width="1.5" PointX="5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.Fml_Expenses" Width="1.5" PointX="2.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.Images" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.Psn_ExpenseInfo" Width="1.5" PointX="5" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.Psn_Expenses" Width="1.5" PointX="2.75" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.RevenueCategories" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.RevenueInfo" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.Revenues" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.Users" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiChiTieu_V2Model.Videos" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="QuanLiChiTieu_V2Model.FK__Users__AccID__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiChiTieu_V2Model.FK__Fml_Expen__Ec_ID__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiChiTieu_V2Model.FK__Psn_Expen__Ec_ID__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiChiTieu_V2Model.FK__Fml_Expen__F_exp__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiChiTieu_V2Model.FK__Psn_Expen__P_exp__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiChiTieu_V2Model.FK__RevenueIn__RevCa__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiChiTieu_V2Model.FK__RevenueIn__Rev_I__6477ECF3" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

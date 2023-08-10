@@ -7,15 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wpf_QuanLyChiTieu.Model
+namespace QuanLyChiTieuModel.EF
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class USP_LOGIN_Result
+    public partial class Psn_ExpenseInfo
     {
-        public int AccID { get; set; }
-        public string AccName { get; set; }
-        public string AccPassword { get; set; }
-        public string AccDisplayname { get; set; }
+        public int P_expI_ID { get; set; }
+        public string P_expI_Note { get; set; }
+        public int Ec_ID { get; set; }
+        public int P_exp_ID { get; set; }
+    
+        public virtual ExpenseCategories ExpenseCategories { get; set; }
+        public virtual Psn_Expenses Psn_Expenses { get; set; }
     }
 }

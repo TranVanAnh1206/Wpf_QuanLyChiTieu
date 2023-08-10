@@ -7,25 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wpf_QuanLyChiTieu.Model
+namespace QuanLyChiTieuModel.EF
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Account
+    public partial class Fml_Expenses
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Account()
+        public Fml_Expenses()
         {
-            this.Users = new HashSet<User>();
+            this.Fml_ExpenseInfo = new HashSet<Fml_ExpenseInfo>();
         }
     
-        public int AccID { get; set; }
-        public string AccName { get; set; }
-        public string AccPassword { get; set; }
-        public string AccDisplayname { get; set; }
+        public int F_exp_ID { get; set; }
+        public string F_exp_Name { get; set; }
+        public Nullable<System.DateTime> F_exp_Date { get; set; }
+        public decimal F_exp_Price { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Fml_ExpenseInfo> Fml_ExpenseInfo { get; set; }
     }
 }

@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wpf_QuanLyChiTieu.Model
+namespace QuanLyChiTieuModel.EF
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Users
     {
         public int u_id { get; set; }
         public Nullable<System.DateTime> u_birth { get; set; }
@@ -20,6 +20,6 @@ namespace Wpf_QuanLyChiTieu.Model
         public string u_Address { get; set; }
         public int AccID { get; set; }
     
-        public virtual Account Account { get; set; }
+        public virtual Accounts Accounts { get; set; }
     }
 }

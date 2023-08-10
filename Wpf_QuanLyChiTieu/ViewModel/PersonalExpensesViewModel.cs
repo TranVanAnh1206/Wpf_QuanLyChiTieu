@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32;
+using QuanLyChiTieuModel.DAO;
+using QuanLyChiTieuModel.EF;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,25 +19,30 @@ namespace Wpf_QuanLyChiTieu.ViewModel
         private int currentMonth = DateTime.Now.Month;
         private int currentYear = DateTime.Now.Year;
 
+        // Table Expense
         private int _exp_ID;
         private string _exp_Name;
         private DateTime? _exp_Date; // Chỉ định có được phép null hay không
         private int _exp_Price;
 
+        // Table ExpenseInfo
         private int _expI_ID;
         private string _expI_Note;
 
+        // Table ExpenseCategories
         private int _ec_ID;
         private string _ec_Name;
 
+        // Table Images
         private int _img_ID;
         private string _img_Path;
 
-        private ObservableCollection<ExpenseCategory> _ExpCateg_List;
+        //
+        private ObservableCollection<ExpenseCategories> _ExpCateg_List;
         private ObservableCollection<PersonalExpensesViewModel> _Exp_List;
 
-        private ExpenseCategory _selectedExpCateg;
-        public ExpenseCategory SelectedExpCateg
+        private ExpenseCategories _selectedExpCateg;
+        public ExpenseCategories SelectedExpCateg
         {
             get => _selectedExpCateg;
             set
@@ -74,38 +81,42 @@ namespace Wpf_QuanLyChiTieu.ViewModel
         public ICommand LoadWindowCommand { get; set; }
         public ICommand ImportImageCommand { get; set; }
 
+        // Table Expense
         public int Exp_ID { get => _exp_ID; set { _exp_ID = value; OnPropertyChanged(); } }
         public string Exp_Name { get => _exp_Name; set { _exp_Name = value; OnPropertyChanged(); } }
         public DateTime? Exp_Date { get => _exp_Date; set { _exp_Date = value; OnPropertyChanged(); } }
         public int Exp_Price { get => _exp_Price; set { _exp_Price = value; OnPropertyChanged(); } }
 
+        // Table ExpenseInfo
         public int ExpI_ID { get => _expI_ID; set { _expI_ID = value; OnPropertyChanged(); } }
         public string ExpI_Note { get => _expI_Note; set { _expI_Note = value; OnPropertyChanged(); } }
 
+        // Table ExpenseCategories
         public int Ec_ID { get => _ec_ID; set { _ec_ID = value; OnPropertyChanged(); } }
         public string Ec_Name { get => _ec_Name; set { _ec_Name = value; OnPropertyChanged(); } }
+
+        // Table Images
         public int Img_ID { get => _img_ID; set { _img_ID = value; OnPropertyChanged(); } }
         public string Img_Path { get => _img_Path; set { _img_Path = value; OnPropertyChanged(); } }
 
-        public ObservableCollection<ExpenseCategory> ExpCateg_List { get => _ExpCateg_List; set { _ExpCateg_List = value; OnPropertyChanged(); } }
+        public ObservableCollection<ExpenseCategories> ExpCateg_List { get => _ExpCateg_List; set { _ExpCateg_List = value; OnPropertyChanged(); } }
         public ObservableCollection<PersonalExpensesViewModel> Exp_List { get => _Exp_List; set { _Exp_List = value; OnPropertyChanged(); } }
-
 
         public PersonalExpensesViewModel()
         {
-            ExpCateg_List = new ObservableCollection<ExpenseCategory>(DataProvider.Instance.DB.ExpenseCategories);
+            var dbContext = QuanLyChiTieuModel.DataProvider.Instance.DB;
+            ExpCateg_List = new ObservableCollection<ExpenseCategories>(new ExpenseCategoryDAO().GetAllExpenseCateg());
 
             LoadWindowCommand = new RelayCommand<Window>(
                 (param) => { return true; },
                 (param) =>
                 {
-
-                    var queryResult = from exp in DataProvider.Instance.DB.Psn_Expenses
-                                      join expInfo in DataProvider.Instance.DB.Psn_ExpenseInfo on exp.P_exp_ID equals expInfo.P_exp_ID into joinedPsnExpenseInfo
+                    var queryResult = from exp in dbContext.Psn_Expenses
+                                      join expInfo in dbContext.Psn_ExpenseInfo on exp.P_exp_ID equals expInfo.P_exp_ID into joinedPsnExpenseInfo
                                       from expInfo in joinedPsnExpenseInfo.DefaultIfEmpty()
-                                      join expCate in DataProvider.Instance.DB.ExpenseCategories on expInfo.Ec_ID equals expCate.Ec_ID into joinedExpenseCategory
+                                      join expCate in dbContext.ExpenseCategories on expInfo.Ec_ID equals expCate.Ec_ID into joinedExpenseCategory
                                       from expCate in joinedExpenseCategory.DefaultIfEmpty()
-                                      join img in DataProvider.Instance.DB.Images on exp.P_exp_ID equals img.Img_Relation_ID into joinedImage
+                                      join img in dbContext.Images on exp.P_exp_ID equals img.Img_Relation_ID into joinedImage
                                       from img in joinedImage.DefaultIfEmpty()
                                       where exp.P_exp_Date.Value.Month == currentMonth
                                       select new PersonalExpensesViewModel()
@@ -123,14 +134,15 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                                           Ec_Name = expCate != null ? expCate.Ec_Name : string.Empty
                                       };
 
-
-                    Exp_List = new ObservableCollection<PersonalExpensesViewModel>(queryResult);
+                    Exp_List = new ObservableCollection<PersonalExpensesViewModel>(queryResult.OrderByDescending(x => x.Exp_Date));
                 }
             );
 
             AddPerExpenseCommand = new RelayCommand<Object>(
                 (param) =>
                 {
+                    if (SelectedItem != null) return false;
+
                     if (Exp_Name == string.Empty || Exp_Price == 0 || Exp_Date == null)
                         return false;
 
@@ -140,83 +152,91 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                 {
                     try
                     {
-                        var newExpense = new Psn_Expenses()
+                        var pe_ID = 0;
+                        var pei_ID = 0;
+                        var img_ID = 0;
+
+                        if (Exp_Name == string.Empty || Exp_Date.Value == null || Exp_Price == 0 || SelectedExpCateg == null)
                         {
-                            P_exp_Name = Exp_Name,
-                            P_exp_Date = Exp_Date,
-                            P_exp_Price = Exp_Price
-                        };
-
-                        DataProvider.Instance.DB.Psn_Expenses.Add(newExpense);
-                        DataProvider.Instance.DB.SaveChanges();
-
-                        var newExpenseDb = DataProvider.Instance.DB.Psn_Expenses.OrderByDescending(pe => pe.P_exp_ID).FirstOrDefault();
-
-                        if (newExpenseDb != null)
-                        {
-                            if (SelectedExpCateg != null)
-                            {
-                                var newExpInfo = new Psn_ExpenseInfo()
-                                {
-                                    P_expI_Note = ExpI_Note,
-                                    Ec_ID = SelectedExpCateg.Ec_ID,
-                                    P_exp_ID = newExpenseDb.P_exp_ID
-
-                                };
-
-                                DataProvider.Instance.DB.Psn_ExpenseInfo.Add(newExpInfo);
-                                DataProvider.Instance.DB.SaveChanges();
-                            }
-                            else
-                            {
-                                MessageBox.Show("Vui lòng chọn danh mục chi tiêu.", "Thông báo.", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                            }
-
-                            if (!string.IsNullOrEmpty(Img_Path))
-                            {
-                                var newExpImg = new Image()
-                                {
-                                    Img_Name = Exp_Date + "_" + Exp_ID + "_" + Exp_Name,
-                                    Img_Url = Img_Path,
-                                    Img_Relation_ID = newExpenseDb.P_exp_ID,
-                                    Img_Type = "Personal Expense"
-                                };
-
-                                DataProvider.Instance.DB.Images.Add(newExpImg);
-                                DataProvider.Instance.DB.SaveChanges();
-                            }
+                            MessageBox.Show("Yêu cầu điền đầy đủ các trường!", "cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
-
-                        var newExpenseInfoDb = DataProvider.Instance.DB.Psn_ExpenseInfo.OrderByDescending(x => x.P_expI_ID).FirstOrDefault();
-                        var newImgDb = DataProvider.Instance.DB.Images.OrderByDescending(x => x.Img_ID).FirstOrDefault();
-
-                        var lastResult = new PersonalExpensesViewModel()
+                        else
                         {
-                            Exp_ID = newExpenseDb.P_exp_ID,
-                            Exp_Name = newExpenseDb.P_exp_Name,
-                            Exp_Price = (int)newExpenseDb.P_exp_Price,
-                            Exp_Date = newExpenseDb.P_exp_Date,
+                            var newExpense = new Psn_Expenses();
+                            newExpense.P_exp_Name = Exp_Name;
+                            newExpense.P_exp_Date = Exp_Date;
+                            newExpense.P_exp_Price = Exp_Price;
+                            pe_ID = new Psn_ExpensesDAO().AddNewPsnExpense(newExpense);
 
-                            ExpI_ID = newExpenseInfoDb != null ? newExpenseInfoDb.P_expI_ID : 0,
-                            ExpI_Note = newExpenseInfoDb != null ? newExpenseInfoDb.P_expI_Note : string.Empty,
-                            Ec_ID = newExpenseInfoDb != null ? newExpenseInfoDb.Ec_ID : 0,
-                            Ec_Name = newExpenseInfoDb != null ? newExpenseInfoDb.ExpenseCategory.Ec_Name : string.Empty,
+                            var newExpenseDb = new Psn_ExpensesDAO().GetExpenseByID(pe_ID);
 
-                            Img_ID = newImgDb != null ? newImgDb.Img_ID : 0,
-                            Img_Path = newImgDb != null ? newImgDb.Img_Url : string.Empty
-                        };
+                            if (newExpenseDb != null)
+                            {
+                                if (SelectedExpCateg != null)
+                                {
+                                    var newExpInfo = new Psn_ExpenseInfo()
+                                    {
+                                        P_expI_Note = ExpI_Note,
+                                        Ec_ID = SelectedExpCateg.Ec_ID,
+                                        P_exp_ID = newExpenseDb.P_exp_ID
 
-                        Exp_List.Add(lastResult);
+                                    };
 
-                        MessageBox.Show("Thêm mới thành công.", "Thông báo.", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    pei_ID = new Psn_ExpenseInfoDAO().AddNewExpenseInfo(newExpInfo);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Vui lòng chọn danh mục chi tiêu.", "Thông báo.", MessageBoxButton.OK, MessageBoxImage.Information);
+                                }
 
-                        Exp_Name = string.Empty;
-                        Exp_Price = 0;
-                        Exp_Date = null;
-                        SelectedExpCateg = null;
-                        ExpI_Note = string.Empty;
-                        Img_Path = string.Empty;
+                                if (!string.IsNullOrEmpty(Img_Path))
+                                {
+                                    var newExpImg = new Images()
+                                    {
+                                        Img_Name = Exp_Date + "_" + Exp_ID + "_" + Exp_Name,
+                                        Img_Url = Img_Path,
+                                        Img_Relation_ID = newExpenseDb.P_exp_ID,
+                                        Img_Type = "Personal Expense"
+                                    };
+
+                                    img_ID = new ImageDAO().AddNewImage(newExpImg);
+                                }
+                            }
+
+                            var newExpenseInfoDb = new Psn_ExpenseInfoDAO().GetExpenseInfoByID(pei_ID);
+                            var newImgDb = new ImageDAO().GetImageByID(img_ID);
+
+                            var lastResult = new PersonalExpensesViewModel()
+                            {
+                                Exp_ID = newExpenseDb.P_exp_ID,
+                                Exp_Name = newExpenseDb.P_exp_Name,
+                                Exp_Price = (int)newExpenseDb.P_exp_Price,
+                                Exp_Date = newExpenseDb.P_exp_Date,
+
+                                ExpI_ID = newExpenseInfoDb != null ? newExpenseInfoDb.P_expI_ID : 0,
+                                ExpI_Note = newExpenseInfoDb != null ? newExpenseInfoDb.P_expI_Note : string.Empty,
+                                Ec_ID = newExpenseInfoDb != null ? newExpenseInfoDb.Ec_ID : 0,
+                                Ec_Name = newExpenseInfoDb != null ? newExpenseInfoDb.ExpenseCategories.Ec_Name : string.Empty,
+
+                                Img_ID = newImgDb != null ? newImgDb.Img_ID : 0,
+                                Img_Path = newImgDb != null ? newImgDb.Img_Url : string.Empty
+                            };
+
+                            Exp_List.Add(lastResult);
+
+                            MessageBox.Show("Thêm mới thành công.", "Thông báo.", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            //MainViewModel mainVM = new MainViewModel();
+                            //mainVM.UpdateSumPsnExpense();
+
+                            Exp_Name = string.Empty;
+                            Exp_Price = 0;
+                            Exp_Date = null;
+                            SelectedExpCateg = null;
+                            ExpI_Note = string.Empty;
+                            Img_Path = string.Empty;
+                        }
+                        
                     }
                     catch
                     {
@@ -243,25 +263,22 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                 },
                 (param) =>
                 {
-                    var exp = DataProvider.Instance.DB.Psn_Expenses.Where(e => e.P_exp_ID == SelectedItem.Exp_ID).SingleOrDefault();
+                    var exp = new Psn_ExpensesDAO().GetExpenseByID(SelectedItem.Exp_ID);
 
                     if (exp != null)
                     {
-                        exp.P_exp_Name = Exp_Name;
-                        exp.P_exp_Price = Exp_Price;
-                        exp.P_exp_Date = Exp_Date;
-                        DataProvider.Instance.DB.SaveChanges();
+                        new Psn_ExpensesDAO().Update(exp.P_exp_ID, Exp_Name, Exp_Price, Exp_Date);
 
-                        var expI = DataProvider.Instance.DB.Psn_ExpenseInfo.Where(e => e.P_expI_ID == SelectedItem.ExpI_ID).SingleOrDefault();
+                        var expI = new Psn_ExpenseInfoDAO().GetExpenseInfoByID(SelectedItem.ExpI_ID);
 
                         if (expI != null)
                         {
-                            expI.Ec_ID = SelectedExpCateg.Ec_ID;
-                            expI.P_expI_Note = ExpI_Note;
-                            DataProvider.Instance.DB.SaveChanges();
+                            // Nếu ExpI tồn tại Thì update
+                            new Psn_ExpenseInfoDAO().Update(expI.P_expI_ID, ExpI_Note, Ec_ID);
                         }
                         else
                         {
+                            // Nếu ExpI không tồn tại Thì thêm mới
                             var newExpI = new Psn_ExpenseInfo()
                             {
                                 Ec_ID = SelectedExpCateg.Ec_ID,
@@ -269,21 +286,20 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                                 P_exp_ID = exp.P_exp_ID
                             };
 
-                            DataProvider.Instance.DB.Psn_ExpenseInfo.Add(newExpI);
-                            DataProvider.Instance.DB.SaveChanges();
+                            new Psn_ExpenseInfoDAO().AddNewExpenseInfo(newExpI);
                         }
 
-                        var expImg = DataProvider.Instance.DB.Images.Where(i => i.Img_ID == SelectedItem.Img_ID).SingleOrDefault();
+                        var expImg = new ImageDAO().GetImageByID(SelectedItem.Img_ID);
 
                         if (expImg != null)
                         {
-                            expImg.Img_Url = Img_Path;
-                            DataProvider.Instance.DB.SaveChanges();
-
+                            // Nếu ExpImg tồn tại Thì update
+                            new ImageDAO().Update(expImg.Img_ID, Img_Path);
                         }
                         else
                         {
-                            var newExpImg = new Image()
+                            // Nếu ExpImg không tồn tại Thì tạo mới
+                            var newExpImg = new Images()
                             {
                                 Img_Name = exp.P_exp_Date.Value.Day + exp.P_exp_Date.Value.Month + exp.P_exp_Date.Value.Year + "_" + exp.P_exp_ID + "_" + exp.P_exp_Name,
                                 Img_Url = Img_Path,
@@ -291,8 +307,7 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                                 Img_Type = "Personal Expense"
                             };
 
-                            DataProvider.Instance.DB.Images.Add(newExpImg);
-                            DataProvider.Instance.DB.SaveChanges();
+                            new ImageDAO().AddNewImage(newExpImg);
                         }
 
                         MessageBox.Show("Cập nhật thành công.", "Thông báo.", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -336,26 +351,23 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                 {
                     try
                     {
-                        var exp = DataProvider.Instance.DB.Psn_Expenses.FirstOrDefault(e => e.P_exp_ID == SelectedItem.Exp_ID);
-                        var expI = DataProvider.Instance.DB.Psn_ExpenseInfo.FirstOrDefault(e => e.P_expI_ID == SelectedItem.ExpI_ID);
-                        var expImg = DataProvider.Instance.DB.Images.FirstOrDefault(i => i.Img_ID == SelectedItem.Img_ID);
+                        var exp = new Psn_ExpensesDAO().GetExpenseByID(SelectedItem.Exp_ID);
+                        var expI = new Psn_ExpenseInfoDAO().GetExpenseInfoByID(SelectedItem.ExpI_ID);
+                        var expImg = new ImageDAO().GetImageByID(SelectedItem.Img_ID);
 
                         if (exp != null)
                         {
                             if (expImg != null)
                             {
-                                DataProvider.Instance.DB.Images.Remove(expImg);
-                                DataProvider.Instance.DB.SaveChanges();
+                                new ImageDAO().Delete(expImg.Img_ID);
                             }
 
                             if (expI != null)
                             {
-                                DataProvider.Instance.DB.Psn_ExpenseInfo.Remove(expI);
-                                DataProvider.Instance.DB.SaveChanges();
+                                new Psn_ExpenseInfoDAO().Delete(expI.P_expI_ID);
                             }
 
-                            DataProvider.Instance.DB.Psn_Expenses.Remove(exp);
-                            DataProvider.Instance.DB.SaveChanges();
+                            new Psn_ExpensesDAO().Delete(exp.P_exp_ID);
 
                             MessageBox.Show("Xóa thành công.", "Thông báo.", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -371,7 +383,7 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                             Img_Path = string.Empty;
                         }
                     }
-                    catch
+                    catch (Exception)
                     {
                         MessageBox.Show("Có lỗi phát sinh.", "Thông báo.", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
@@ -379,7 +391,15 @@ namespace Wpf_QuanLyChiTieu.ViewModel
             );
 
             CancelPerExpenseCommand = new RelayCommand<Object>(
-                (param) => { return true; },
+                (param) => 
+                {
+                    if (SelectedItem == null) return false;
+
+                    if (string.IsNullOrEmpty(Exp_Name) || Exp_Date == null || Exp_Price == 0) 
+                        return false;
+
+                    return true; 
+                },
                 (param) =>
                 {
                     SelectedExpCateg = null;
@@ -399,21 +419,19 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                 (param) =>
                 {
                     OpenFileDialog ofd = new OpenFileDialog();
-                    ofd.Filter = "All Files (*.*)|*.*";
+                    ofd.Filter = "Image files (*.jpg;*.jpeg;*.png;*.gif;*.bmp)|*.jpg;*.jpeg;*.png;*.gif;*.bmp|All files (*.*)|*.*";
                     ofd.Multiselect = true;
 
                     if (ofd.ShowDialog() == true)
                     {
                         //Uri uri = new Uri(ofd.FileName);
-
                         //string sourceFile = ofd.FileName;
                         //string resourceUri = "..//..//..//Images//FmlExp_Image//" + Path.GetFileName(sourceFile);
                         //File.Copy(sourceFile, resourceUri, true);
-
                         //ImgPath = uri.ToString();
 
                         string sourceFile = ofd.FileName;
-                        string destinationFolder = "../../Images/FmlExp_Image/";
+                        string destinationFolder = @"../../Images/FmlExp_Image/";
                         string destinationPath = Path.Combine(Environment.CurrentDirectory, destinationFolder, Path.GetFileName(sourceFile));
                         File.Copy(sourceFile, destinationPath, true);
 

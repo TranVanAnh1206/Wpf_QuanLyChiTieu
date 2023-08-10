@@ -7,25 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wpf_QuanLyChiTieu.Model
+namespace QuanLyChiTieuModel.EF
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Fml_Expenses
+    public partial class RevenueCategories
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Fml_Expenses()
+        public RevenueCategories()
         {
-            this.Fml_ExpenseInfo = new HashSet<Fml_ExpenseInfo>();
+            this.RevenueInfo = new HashSet<RevenueInfo>();
         }
     
-        public int F_exp_ID { get; set; }
-        public string F_exp_Name { get; set; }
-        public Nullable<System.DateTime> F_exp_Date { get; set; }
-        public decimal F_exp_Price { get; set; }
+        public int RevCateg_ID { get; set; }
+        public string RevCateg_Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Fml_ExpenseInfo> Fml_ExpenseInfo { get; set; }
+        public virtual ICollection<RevenueInfo> RevenueInfo { get; set; }
     }
 }

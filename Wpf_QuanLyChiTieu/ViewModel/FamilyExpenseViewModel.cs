@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using QuanLyChiTieuModel.DAO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Wpf_QuanLyChiTieu.Model;
+using QuanLyChiTieuModel.EF;
 
 namespace Wpf_QuanLyChiTieu.ViewModel
 {
@@ -41,8 +42,8 @@ namespace Wpf_QuanLyChiTieu.ViewModel
 
         // =======
 
-        private ExpenseCategory _selectedExpenseCategory;
-        public ExpenseCategory SelectedExpenseCategory
+        private ExpenseCategories _selectedExpenseCategory;
+        public ExpenseCategories SelectedExpenseCategory
         {
             get => _selectedExpenseCategory;
             set
@@ -84,10 +85,10 @@ namespace Wpf_QuanLyChiTieu.ViewModel
         public int Img_ID { get => _img_ID; set { _img_ID = value; OnPropertyChanged(); } }
 
 
-        private ObservableCollection<ExpenseCategory> _expCateg_List;
+        private ObservableCollection<ExpenseCategories> _expCateg_List;
         private ObservableCollection<FamilyExpenseViewModel> _expenses_List;
 
-        public ObservableCollection<ExpenseCategory> ExpCateg_List { get => _expCateg_List; set { _expCateg_List = value; OnPropertyChanged(); } }
+        public ObservableCollection<ExpenseCategories> ExpCateg_List { get => _expCateg_List; set { _expCateg_List = value; OnPropertyChanged(); } }
         public ObservableCollection<FamilyExpenseViewModel> Expenses_List { get => _expenses_List; set { _expenses_List = value; OnPropertyChanged(); } }
 
 
@@ -96,49 +97,43 @@ namespace Wpf_QuanLyChiTieu.ViewModel
 
         public FamilyExpenseViewModel()
         {
-            ExpCateg_List = new ObservableCollection<ExpenseCategory>(DataProvider.Instance.DB.ExpenseCategories);
+            ExpCateg_List = new ObservableCollection<ExpenseCategories>(
+                    QuanLyChiTieuModel.DataProvider.Instance.DB.ExpenseCategories
+                );
 
             LoadWindowCommand = new RelayCommand<Window>(
                 (param) => { return true; },
                 (param) =>
                 {
-                    //var resultQuery = from exp in DataProvider.Instance.DB.Expenses
-                    //                  join expInfo in DataProvider.Instance.DB.ExpenseInfo on exp.Exp_ID equals expInfo.Exp_ID
-                    //                  join expCate in DataProvider.Instance.DB.ExpenseCategories on expInfo.Ec_ID equals expCate.Ec_ID
-                    //                  where exp.ExpType_ID == "et002" && exp.Exp_Date.Value.Month == 7
-                    //                  select new FamilyExpenseViewModel()
-                    //                  {
-                    //                      Exp_Date = exp.Exp_Date,
-                    //                      Exp_Name = exp.Exp_Name,
-                    //                      Exp_Price = (int)exp.Exp_Price,
-                    //                      ExpI_Note = expInfo.ExpI_Node,
-                    //                      Ec_Name = expCate.Ec_Name
-                    //                  };
+                    var dbContext = QuanLyChiTieuModel.DataProvider.Instance.DB;
 
-                    var resultQuery = from exp in DataProvider.Instance.DB.Fml_Expenses
-                                      join expInfo in DataProvider.Instance.DB.Fml_ExpenseInfo on exp.F_exp_ID equals expInfo.F_exp_ID into joinedExpenseInfo
-                                      from expInfo in joinedExpenseInfo.DefaultIfEmpty()
-                                      join expCate in DataProvider.Instance.DB.ExpenseCategories on expInfo.Ec_ID equals expCate.Ec_ID into joinedExpenseCate
-                                      from expCate in joinedExpenseCate.DefaultIfEmpty()
-                                      join img in DataProvider.Instance.DB.Images on exp.F_exp_ID equals img.Img_Relation_ID into joinedImages
-                                      from img in joinedImages.DefaultIfEmpty()
-                                      where exp.F_exp_Date.Value.Month == currentMonth
-                                      select new FamilyExpenseViewModel()
-                                      {
-                                          Exp_ID = exp.F_exp_ID,
-                                          Ec_ID = expCate != null ? expCate.Ec_ID : 0,
-                                          ExpI_ID = expInfo != null ? expInfo.F_expI_ID : 0,
-                                          Img_ID = img != null ? img.Img_ID : 0,
+                    var queryLinQ = from fe in dbContext.Fml_Expenses
+                                    join fei in dbContext.Fml_ExpenseInfo
+                                    on fe.F_exp_ID equals fei.F_exp_ID into joinedFmlExpenseInfo
+                                    from fei in joinedFmlExpenseInfo.DefaultIfEmpty()
+                                    join ec in dbContext.ExpenseCategories
+                                    on fei.Ec_ID equals ec.Ec_ID into joinedExpenseCategory
+                                    from ec in joinedExpenseCategory.DefaultIfEmpty()
+                                    join img in dbContext.Images
+                                    on fe.F_exp_ID equals img.Img_Relation_ID into joinedImage
+                                    from img in joinedImage.DefaultIfEmpty()
+                                    where fe.F_exp_Date.Value.Month == currentMonth
+                                    select new FamilyExpenseViewModel()
+                                    {
+                                        Exp_ID = fe.F_exp_ID,
+                                        Ec_ID = ec != null ? ec.Ec_ID : 0,
+                                        ExpI_ID = fei != null ? fei.F_expI_ID : 0,
+                                        Img_ID = img != null ? img.Img_ID : 0,
 
-                                          Exp_Date = exp.F_exp_Date,
-                                          Exp_Name = exp.F_exp_Name,
-                                          Exp_Price = (int)exp.F_exp_Price,
-                                          ExpI_Note = expInfo != null ? expInfo.F_expI_Note : string.Empty,
-                                          Ec_Name = expCate != null ? expCate.Ec_Name : string.Empty,
-                                          ImgPath = img != null ? img.Img_Url : string.Empty
-                                      };
+                                        Exp_Date = fe.F_exp_Date,
+                                        Exp_Name = fe.F_exp_Name,
+                                        Exp_Price = (int)fe.F_exp_Price,
+                                        ExpI_Note = fei != null ? fei.F_expI_Note : string.Empty,
+                                        Ec_Name = ec != null ? ec.Ec_Name : string.Empty,
+                                        ImgPath = img != null ? img.Img_Url : string.Empty
+                                    };
 
-                    Expenses_List = new ObservableCollection<FamilyExpenseViewModel>(resultQuery);
+                    Expenses_List = new ObservableCollection<FamilyExpenseViewModel>(queryLinQ.OrderByDescending(x => x.Exp_Date));
                 }
             );
 
@@ -168,11 +163,12 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                             F_exp_Price = Exp_Price
                         };
 
-                        DataProvider.Instance.DB.Fml_Expenses.Add(newExp);
-                        DataProvider.Instance.DB.SaveChanges();
+                        var Fml_Expense_ID = new Fml_ExpensesDAO().AddNewFmlExpense(newExp);
+                        var Fml_ExpenseInfo_ID = 0;
+                        var img_ID = 0;
 
                         // Lấy ra bản ghi mới nhất vừa ghi vào bảng Expenses
-                        var newFmlExpense = DataProvider.Instance.DB.Fml_Expenses.OrderByDescending(e => e.F_exp_ID).FirstOrDefault();
+                        var newFmlExpense = new Fml_ExpensesDAO().GetFml_ExpensesByID(Fml_Expense_ID);
 
                         if (newFmlExpense != null)
                         {
@@ -185,8 +181,7 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                                     F_exp_ID = newFmlExpense.F_exp_ID
                                 };
 
-                                DataProvider.Instance.DB.Fml_ExpenseInfo.Add(newExpInfo);
-                                DataProvider.Instance.DB.SaveChanges();
+                                Fml_ExpenseInfo_ID = new Fml_ExpensesInfoDAO().AddNewExpenseInfo(newExpInfo);
                             }
                             else
                             {
@@ -195,7 +190,7 @@ namespace Wpf_QuanLyChiTieu.ViewModel
 
                             if (!string.IsNullOrEmpty(ImgPath))
                             {
-                                var newImage = new Image()
+                                var newImage = new Images()
                                 {
                                     Img_Name = newFmlExpense.F_exp_Name,
                                     Img_Url = ImgPath,
@@ -203,24 +198,22 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                                     Img_Type = "Family Expense"
                                 };
 
-                                DataProvider.Instance.DB.Images.Add(newImage);
-                                DataProvider.Instance.DB.SaveChanges();
+                                img_ID = new ImageDAO().AddNewImage(newImage);
                             }
                         }
 
-                        var newFmlExpenseInfo = DataProvider.Instance.DB.Fml_ExpenseInfo.OrderByDescending(e => e.F_expI_ID).FirstOrDefault();
-                        var newFmlExpenseImg = DataProvider.Instance.DB.Images.OrderByDescending(e => e.Img_ID).FirstOrDefault();
+                        var newFmlExpenseInfo = new Fml_ExpensesInfoDAO().GetExpenseInfoByID(Fml_ExpenseInfo_ID);
+                        var newFmlExpenseImg = new ImageDAO().GetImageByID(img_ID);
 
                         var lastResult = new FamilyExpenseViewModel()
                         {
-
                             Exp_ID = newFmlExpense.F_exp_ID,
                             Exp_Name = newFmlExpense.F_exp_Name,
                             Exp_Date = newFmlExpense.F_exp_Date,
                             Exp_Price = (int)newFmlExpense.F_exp_Price,
                             
                             Ec_ID = newFmlExpenseInfo != null ? newFmlExpenseInfo.Ec_ID : 0,
-                            Ec_Name = newFmlExpenseInfo != null ? newFmlExpenseInfo.ExpenseCategory.Ec_Name : string.Empty,
+                            Ec_Name = newFmlExpenseInfo != null ? newFmlExpenseInfo.ExpenseCategories.Ec_Name : string.Empty,
                             ExpI_ID = newFmlExpenseInfo != null ? newFmlExpenseInfo.F_expI_ID : 0,
                             ExpI_Note = newFmlExpenseInfo != null ? newFmlExpenseInfo.F_expI_Note : string.Empty,
 
@@ -229,6 +222,9 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                         };
 
                         Expenses_List.Add(lastResult);
+
+                        MainViewModel mainVM = new MainViewModel();
+                        mainVM.UpdateExpense();
 
                         MessageBox.Show("Thêm thành công.", "Thông báo.", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -239,7 +235,7 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                         Ec_Name = string.Empty;
                         SelectedExpenseCategory = null;
                         ExpI_Note = string.Empty;
-                        ImgPath = string.Empty;
+                        ImgPath = string.Empty;                        
                     }
                 }
 
@@ -262,9 +258,9 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                 {
                     try
                     {
-                        var Expense_Item = DataProvider.Instance.DB.Fml_Expenses.Where(x => x.F_exp_ID == SelectedItem.Exp_ID).SingleOrDefault();
-                        var ExpenseInfo_Item = DataProvider.Instance.DB.Fml_ExpenseInfo.Where(x => x.F_expI_ID == SelectedItem.ExpI_ID).SingleOrDefault();
-                        var Image_Item = DataProvider.Instance.DB.Images.Where(i => i.Img_ID == SelectedItem.Img_ID).SingleOrDefault();
+                        var Expense_Item = new Fml_ExpensesDAO().GetFml_ExpensesByID(SelectedItem.Exp_ID);
+                        var ExpenseInfo_Item = new Fml_ExpensesInfoDAO().GetExpenseInfoByID(SelectedItem.ExpI_ID);
+                        var Image_Item = new ImageDAO().GetImageByID(SelectedItem.Img_ID);
 
                         if (Expense_Item == null)
                         {
@@ -272,10 +268,12 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                         }
                         else
                         {
-                            Expense_Item.F_exp_Name = Exp_Name;
-                            Expense_Item.F_exp_Price = Exp_Price;
-                            Expense_Item.F_exp_Date = Exp_Date;
-                            DataProvider.Instance.DB.SaveChanges();
+                            //Expense_Item.F_exp_Name = Exp_Name;
+                            //Expense_Item.F_exp_Price = Exp_Price;
+                            //Expense_Item.F_exp_Date = Exp_Date;
+                            //DataProvider.Instance.DB.SaveChanges();
+
+                            var fe_result = new Fml_ExpensesDAO().Update(Expense_Item.F_exp_ID, Exp_Name, Exp_Price, Exp_Date);
 
 
                             if (ExpenseInfo_Item == null)
@@ -287,19 +285,20 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                                     F_exp_ID = SelectedItem.Exp_ID
                                 };
 
-                                DataProvider.Instance.DB.Fml_ExpenseInfo.Add(newExpInfo);
-                                DataProvider.Instance.DB.SaveChanges();
+                                var fei_ID = new Fml_ExpensesInfoDAO().AddNewExpenseInfo(newExpInfo);
                             }
                             else
                             {
-                                ExpenseInfo_Item.F_expI_Note = ExpI_Note;
-                                ExpenseInfo_Item.Ec_ID = SelectedExpenseCategory.Ec_ID;
-                                DataProvider.Instance.DB.SaveChanges();
+                                //ExpenseInfo_Item.F_expI_Note = ExpI_Note;
+                                //ExpenseInfo_Item.Ec_ID = SelectedExpenseCategory.Ec_ID;
+                                //DataProvider.Instance.DB.SaveChanges();
+
+                                new Fml_ExpensesInfoDAO().Update(ExpenseInfo_Item.F_expI_ID, ExpI_Note, SelectedExpenseCategory.Ec_ID);
                             }
 
                             if (Image_Item == null)
                             {
-                                var newImg = new Image()
+                                var newImg = new Images()
                                 {
                                     Img_Name = Expense_Item.F_exp_Date.Value.Day + Expense_Item.F_exp_Date.Value.Month + Expense_Item.F_exp_Date.Value.Year + "_" + Expense_Item.F_exp_ID + "_" + SelectedItem.Exp_Name,
                                     Img_Url = ImgPath,
@@ -307,13 +306,14 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                                     Img_Type = "Family Expense"
                                 };
 
-                                DataProvider.Instance.DB.Images.Add(newImg);
-                                DataProvider.Instance.DB.SaveChanges();
+                                var imgID = new ImageDAO().AddNewImage(newImg);
                             } 
                             else
                             {
-                                Image_Item.Img_Url = ImgPath;
-                                DataProvider.Instance.DB.SaveChanges();
+                                //Image_Item.Img_Url = ImgPath;
+                                //DataProvider.Instance.DB.SaveChanges();
+
+                                new ImageDAO().Update(Image_Item.Img_ID, ImgPath);
                             }
 
                             MessageBox.Show("Cập nhật thành công.", "Thông báo.", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -381,30 +381,28 @@ namespace Wpf_QuanLyChiTieu.ViewModel
                 {
                     try
                     {
-                        var exp = DataProvider.Instance.DB.Fml_Expenses.FirstOrDefault(e => e.F_exp_ID == SelectedItem.Exp_ID);
-                        var expI = DataProvider.Instance.DB.Fml_ExpenseInfo.FirstOrDefault(e => e.F_expI_ID == SelectedItem.ExpI_ID);
-                        var expImg = DataProvider.Instance.DB.Images.FirstOrDefault(e => e.Img_ID == SelectedItem.Img_ID);
+                        var exp = new Fml_ExpensesDAO().GetFml_ExpensesByID(SelectedItem.Exp_ID);
+                        var expI = new Fml_ExpensesInfoDAO().GetExpenseInfoByID(SelectedItem.ExpI_ID);
+                        var expImg = new ImageDAO().GetImageByID(SelectedItem.Img_ID);
 
                         if (exp != null)
                         {
                             if (expImg != null)
                             {
-                                DataProvider.Instance.DB.Images.Remove(expImg);
-                                DataProvider.Instance.DB.SaveChanges();
+                                new ImageDAO().Delete(expImg.Img_ID);
                             }
 
                             if (expI != null)
                             {
-                                DataProvider.Instance.DB.Fml_ExpenseInfo.Remove(expI);
-                                DataProvider.Instance.DB.SaveChanges();
+                                new Fml_ExpensesInfoDAO().Dalete(expI.F_expI_ID);
                             }
 
-                            DataProvider.Instance.DB.Fml_Expenses.Remove(exp);
-                            DataProvider.Instance.DB.SaveChanges();
+                            new Fml_ExpensesDAO().Dalete(exp.F_exp_ID);
 
-                            MessageBox.Show("Xóa thành công.", "Thông báo.", MessageBoxButton.OK, MessageBoxImage.Information);
 
                             Expenses_List.Remove(SelectedItem);
+
+                            MessageBox.Show("Xóa thành công.", "Thông báo.", MessageBoxButton.OK, MessageBoxImage.Information);
 
                             // Làm trống các trường dữ liệu
                             SelectedItem = null;

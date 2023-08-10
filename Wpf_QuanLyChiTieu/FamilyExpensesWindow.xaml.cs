@@ -22,6 +22,10 @@ namespace Wpf_QuanLyChiTieu
         public FamilyExpensesWindow()
         {
             InitializeComponent();
+
+            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListExpense.ItemsSource);
+            //PropertyGroupDescription groupDescription = new PropertyGroupDescription("Exp_Date");
+            //view.GroupDescriptions.Add(groupDescription);
         }
 
         private void ToUpperFirstChar(TextBox txt)

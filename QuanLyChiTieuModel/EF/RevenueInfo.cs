@@ -7,19 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wpf_QuanLyChiTieu.Model
+namespace QuanLyChiTieuModel.EF
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Fml_ExpenseInfo
+    public partial class RevenueInfo
     {
-        public int F_expI_ID { get; set; }
-        public string F_expI_Note { get; set; }
-        public int Ec_ID { get; set; }
-        public int F_exp_ID { get; set; }
+        public int RevI_ID { get; set; }
+        public string RevI_Note { get; set; }
+        public int Rev_ID { get; set; }
+        public int RevCateg_ID { get; set; }
     
-        public virtual ExpenseCategory ExpenseCategory { get; set; }
-        public virtual Fml_Expenses Fml_Expenses { get; set; }
+        public virtual RevenueCategories RevenueCategories { get; set; }
+        public virtual Revenues Revenues { get; set; }
     }
 }
